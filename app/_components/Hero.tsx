@@ -27,7 +27,7 @@ export default function Hero() {
         transition={{ duration: 0.55, delay: 0.25 }}
         className="inline-flex items-center gap-2 mb-4 sm:mb-4 px-4 py-1.5 border border-foreground/14 rounded-full bg-foreground/5 mt-8"
       >
-        <span className="w-1.5 h-1.5 rounded-full bg-[#56B76B] [animation:pulse_2.2s_ease-in-out_infinite]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-accent [animation:pulse_2.2s_ease-in-out_infinite]" />
         <span className="font-sans text-[11px] tracking-[0.12em] uppercase flex items-center gap-2">
           Full-Stack Developer{" "}
           <span className="w-[2px] h-[2px] rounded-full bg-accent inline-block shrink-0" />{" "}
@@ -48,8 +48,7 @@ export default function Hero() {
         >
           Shaping elegant,
           <br />
-          <span className="italic text-foreground/70">reliable</span> digital
-          products
+          <span className="italic text-accent">reliable</span> digital products
           <br />
           with grounded AI depth.
         </motion.h1>
@@ -92,10 +91,10 @@ export default function Hero() {
 
         <motion.div variants={fade} className="flex gap-[0.65rem]">
           <a
-            href="#experience"
+            href="#work"
             className="font-sans text-[13px] tracking-[0.08em] px-6 sm:px-7 py-[13px] rounded-full bg-foreground text-background hover:-translate-y-0.5 hover:opacity-90 transition-all duration-300"
           >
-            View Experience
+            View Work
           </a>
           <a
             href="#contact"

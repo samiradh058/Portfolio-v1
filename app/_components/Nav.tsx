@@ -70,7 +70,7 @@ export default function Nav() {
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="/resume.pdf"
+            href="/Samir_CV.pdf"
             download
             className="relative flex items-center justify-center font-sans text-[11px] tracking-[0.09em] px-5 py-2 rounded-full border border-foreground text-foreground hover:translate-y-[-2px] transition-transform duration-200 text-center group pr-6"
           >

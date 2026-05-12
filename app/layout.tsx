@@ -22,7 +22,7 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Samir | Portfolio",
+  title: "Samir Adhikari",
   description:
     "A portfolio website showcasing the projects and skills of Samir, a software developer specializing in web development and design.",
 };
