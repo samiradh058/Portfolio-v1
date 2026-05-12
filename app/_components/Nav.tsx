@@ -70,7 +70,7 @@ export default function Nav() {
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="/Samir_CV.pdf"
+            href="/Samir_Adhikari_CV.pdf"
             download
             className="relative flex items-center justify-center font-sans text-[11px] tracking-[0.09em] px-5 py-2 rounded-full border border-foreground text-foreground hover:translate-y-[-2px] transition-transform duration-200 text-center group pr-6"
           >
@@ -136,7 +136,7 @@ export default function Nav() {
 
               <div className="flex flex-col gap-3 pt-2 border-t border-[var(--surface)]">
                 <a
-                  href="/resume.pdf"
+                  href="/Samir_Adhikari_CV.pdf"
                   download
                   className="font-sans text-[12px] tracking-[0.06em] px-5 py-2.5 rounded-full border border-[var(--foreground)] text-[var(--foreground)] text-center hover:bg-[var(--surface)] transition-colors duration-200"
                 >
