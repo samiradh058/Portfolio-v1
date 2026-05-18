@@ -72,7 +72,7 @@ export default function Contact() {
                   <motion.div variants={fade} className="flex flex-wrap gap-3">
                     <a
                       href="mailto:adhikarisamir68@gmail.com"
-                      className="w-fit flex items-center justify-center rounded-full bg-background px-6 py-3 text-center font-sans text-[13px] tracking-[0.04em] text-foreground transition-opacity duration-200 hover:opacity-80 sm:px-8 sm:py-[14px]"
+                      className="w-fit flex items-center justify-center rounded-full bg-background px-6 py-3 text-center font-sans text-[13px] tracking-[0.04em] text-foreground hover:translate-y-[-2px] transition-transform duration-200 sm:px-8 sm:py-[14px]"
                     >
                       adhikarisamir68@gmail.com
                     </a>

@@ -29,7 +29,7 @@ export const skills = [
   },
   {
     cat: "Backend",
-    items: ["Node.js", "NestJS", "FastAPI"],
+    items: ["FastAPI", "Node.js", "Express.js", "NestJS"],
   },
   {
     cat: "Database",
@@ -50,7 +50,7 @@ export const personalProjects = [
     id: "p1",
     kind: "personal",
     name: "Job Portal",
-    desc: "Job Portal is a web app built with React, FastAPI, and Celery with role-based authentication, async task processing, CV parsing, embedding-based candidate-job matching, and HMAC signature validation for secure APIs.",
+    desc: "Job Portal is a web app built with React, FastAPI, and Celery with role-based authentication , async task processing, CV parsing, embedding-based candidate's score/match, and HMAC signature validation for secure APIs.",
     tags: ["OAuth", "Embedding", "HMAC Verification", "Async Task Processing"],
     year: "2025",
     image: "/jobPortal.png",
@@ -87,13 +87,13 @@ export const professionalProjects = [
   {
     id: "w1",
     name: "Internet Banking",
-    desc: "End-to-end implementation of a secure online banking platform with robust security measures.",
+    desc: "End-to-end delivery of a secure online banking platform with money transfers, remittance, top-ups, Rav-kav, and other core features, backed by robust security controls.",
     tags: ["React", "HMAC verification", "JWT auth"],
     image: "/ibank.png",
   },
   {
     id: "w2",
-    name: "Card Management System",
+    name: "Card Mgnt. System",
     desc: "Comprehensive card management system for all card-related activities including assigning cards, changing status, setting fees, setting limits, and more.",
     tags: ["Next.js", "Typescript", "Tailwind"],
     image: "/cms.png",
@@ -104,6 +104,17 @@ export const professionalProjects = [
     desc: "A robust core banking system handling account management, transaction processing, and customer data management with high reliability and security.",
     tags: ["Angular.js"],
     image: "/cbs.png",
+  },
+];
+
+export const workExperience = [
+  {
+    company: "WOW Finstack Nepal",
+    location: "Nayabazar, Pokhara",
+    from: "May 2025",
+    to: "May 2026",
+    summary:
+      "Frontend developer responsible for the commercial banking projects listed below: Internet Banking, Card Management, and Core Banking System.",
   },
 ];
 

@@ -60,7 +60,7 @@ export default function Hero() {
           {stats.map((s) => (
             <div
               key={s.v}
-              className="flex-shrink-0 px-[1.4rem] py-[1.1rem] rounded-[14px] border border-foreground/14 min-w-[120px] lg:min-w-0 transition-transform duration-300 hover:-translate-x-2 bg-surface"
+              className="flex-shrink-0 px-[1.4rem] py-[1.1rem] rounded-[14px] border border-foreground/14 min-w-[120px] lg:min-w-0 transition-transform duration-300 hover:-translate-x-2 bg-foreground/5"
             >
               <p className="font-serif font-light text-[1.9rem] leading-none tracking-[-0.03em] text-foreground">
                 {s.v}

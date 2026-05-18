@@ -6,7 +6,11 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 
 import Label from "./Label";
-import { personalProjects, professionalProjects } from "../_const/data";
+import {
+  personalProjects,
+  professionalProjects,
+  workExperience,
+} from "../_const/data";
 
 const fade = {
   hidden: { opacity: 0, y: 16 },
@@ -29,7 +33,7 @@ function Tags({ tags }: { tags: string[] }) {
       {tags.map((tag) => (
         <span
           key={tag}
-          className="font-sans text-[11px] px-[10px] py-[3px] rounded-full border border-foreground/14 text-foreground/60 bg-background"
+          className="font-sans text-[11px] px-[10px] py-[3px] rounded-full border border-foreground/14 text-foreground/60 bg-foreground/5"
         >
           {tag}
         </span>
@@ -75,7 +79,7 @@ function CardShell({
       </div>
 
       {/* Content */}
-      <div className="p-5 sm:p-6 flex flex-col gap-3">
+      <div className="p-5 sm:p-6 flex flex-col gap-3 flex-1">
         <div className="flex justify-between items-start gap-4">
           <h3 className="font-serif text-[1.25rem] sm:text-[1.35rem] font-normal tracking-[-0.02em] text-foreground">
             {name}
@@ -85,7 +89,9 @@ function CardShell({
         <p className="font-sans text-[13px] leading-[1.65] text-foreground/60">
           {desc}
         </p>
-        <Tags tags={tags} />
+        <div className="mt-auto pt-2">
+          <Tags tags={tags} />
+        </div>
       </div>
     </>
   );
@@ -97,7 +103,7 @@ function CardShell({
         target="_blank"
         rel="noopener noreferrer"
         variants={fade}
-        className="group flex flex-col border border-foreground/14 rounded-[18px] bg-background overflow-hidden cursor-pointer"
+        className="group flex flex-col h-full border border-foreground/14 rounded-[18px] bg-background overflow-hidden cursor-pointer"
       >
         {inner}
       </motion.a>
@@ -107,7 +113,7 @@ function CardShell({
   return (
     <motion.div
       variants={fade}
-      className="flex flex-col border border-foreground/14 rounded-[18px] bg-background overflow-hidden"
+      className="flex flex-col h-full border border-foreground/14 rounded-[18px] bg-background overflow-hidden"
     >
       {inner}
     </motion.div>
@@ -120,7 +126,7 @@ export default function Work() {
   const inView = useInView(ref, { once: true, amount: 0.08 });
 
   return (
-    <section id="work" ref={ref} className="bg-surface">
+    <section id="work" ref={ref} className="bg-foreground/5">
       <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-16 sm:py-[6.5rem]">
         <motion.div
           initial="hidden"
@@ -139,9 +145,9 @@ export default function Work() {
             <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] leading-[1.18] tracking-[-0.025em] text-foreground">
               Personal projects
             </h2>
-            <span className="font-mono text-[11px] tracking-[0.1em] text-foreground/50 sm:self-end">
+            {/* <span className="font-mono text-[11px] tracking-[0.1em] text-foreground/50 sm:self-end">
               {personalProjects.length} projects
-            </span>
+            </span> */}
           </motion.div>
 
           <motion.div
@@ -165,18 +171,48 @@ export default function Work() {
             ))}
           </motion.div>
 
+          {/* ── Experience ── */}
+          <motion.div
+            variants={fade}
+            className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 mb-6"
+          >
+            <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] leading-[1.18] tracking-[-0.025em] text-foreground">
+              Experience
+            </h2>
+          </motion.div>
+
+          <motion.div variants={stag} className="grid grid-cols-1 gap-5 mb-16">
+            {workExperience.map((item) => (
+              <motion.div
+                key={`${item.company}-${item.from}`}
+                variants={fade}
+                className="flex flex-col gap-3 border border-foreground/14 rounded-[18px] bg-background p-5 sm:p-6"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                  <div>
+                    <h3 className="font-serif text-[1.3rem] sm:text-[1.4rem] font-normal tracking-[-0.02em] text-foreground">
+                      {item.company}
+                    </h3>
+                    <p className="font-sans text-[13px] leading-[1.6] text-foreground/60">
+                      {item.location}
+                    </p>
+                  </div>
+                  <span className="font-mono text-[11px] tracking-[0.1em] text-foreground/50 shrink-0">
+                    {item.from} - {item.to}
+                  </span>
+                </div>
+                <p className="font-sans text-[13px] leading-[1.7] text-foreground/70">
+                  {item.summary}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
           {/* ── Commercial ── */}
           <motion.div
             variants={fade}
-            className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 mb-8"
-          >
-            <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] leading-[1.18] tracking-[-0.025em] text-foreground">
-              Commercial projects
-            </h2>
-            <span className="font-mono text-[11px] tracking-[0.1em] text-foreground/50 sm:self-end">
-              {professionalProjects.length} projects
-            </span>
-          </motion.div>
+            className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3"
+          ></motion.div>
 
           <motion.div
             variants={stag}
@@ -197,8 +233,6 @@ export default function Work() {
               />
             ))}
           </motion.div>
-
-          <div className="border-t border-foreground/14 mt-10 sm:mt-12" />
         </motion.div>
       </div>
     </section>

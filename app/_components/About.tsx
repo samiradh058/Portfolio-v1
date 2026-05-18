@@ -56,7 +56,7 @@ export default function About() {
 
             <div className="grid grid-cols-2 gap-[0.65rem]">
               {aboutCards.map((card) => (
-                <div key={card.label} className="p-4 bg-surface rounded-xl">
+                <div key={card.label} className="p-4 bg-foreground/5 rounded-xl">
                   <p className="font-mono text-[9px] tracking-[0.18em] uppercase text-foreground/50 mb-1.5">
                     {card.label}
                   </p>
