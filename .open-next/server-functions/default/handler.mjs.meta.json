@@ -4527,7 +4527,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/chunks/ssr/_0sq-n55._.js": {
-      "bytes": 181478,
+      "bytes": 181555,
       "imports": [],
       "format": "cjs"
     },
@@ -7563,7 +7563,7 @@
           "bytesInOutput": 1454
         },
         ".open-next/server-functions/default/.next/server/chunks/ssr/_0sq-n55._.js": {
-          "bytesInOutput": 200018
+          "bytesInOutput": 200095
         },
         ".open-next/server-functions/default/.next/server/chunks/ssr/_next-internal_server_app_page_actions_09-gtaw.js": {
           "bytesInOutput": 249
@@ -7743,7 +7743,7 @@
           "bytesInOutput": 57720
         }
       },
-      "bytes": 3061175
+      "bytes": 3061252
     }
   }
 }
