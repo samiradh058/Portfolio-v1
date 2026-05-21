@@ -55,8 +55,7 @@ export default function Contact() {
                 >
                   Ready to build
                   <br />
-                  something{" "}
-                  <em className="italic text-background/45">purposeful?</em>
+                  something <em className="italic text-accent">purposeful?</em>
                 </motion.h2>
 
                 <div className="flex flex-col gap-10 sm:flex-row sm:justify-between sm:gap-14">
