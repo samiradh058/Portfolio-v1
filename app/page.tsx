@@ -10,7 +10,7 @@ const MONO = "var(--font-mono-alt), monospace";
 const APPEAR_MS = 600;
 const HOLD_MS = 1200;
 const TOTAL_MS = APPEAR_MS + HOLD_MS;
-const ANIMATION_MS = 1050; // matches duration * 1000
+const ANIMATION_MS = 1050; // matches duration*1000
 
 export default function Home() {
   const [split, setSplit] = useState(false);
