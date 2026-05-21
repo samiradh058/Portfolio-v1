@@ -50,7 +50,7 @@ export const personalProjects = [
     id: "p1",
     kind: "personal",
     name: "Job Portal",
-    desc: "Job Portal is a web app built with React, FastAPI, and Celery with role-based authentication , async task processing, CV parsing, embedding-based candidate's score/match, and HMAC signature validation for secure APIs.",
+    desc: "Job Portal is a web app built with React, FastAPI, and Celery with role-based authentication (Candidate, Employer, Admin), async task processing, CV parsing, embedding-based candidate-job matching, and HMAC signature validation for secure APIs.",
     tags: ["OAuth", "Embedding", "HMAC Verification", "Async Task Processing"],
     year: "2025",
     image: "/jobPortal.png",
@@ -74,12 +74,12 @@ export const personalProjects = [
   {
     id: "p3",
     kind: "personal",
-    name: "QuickCart",
-    desc: "QuickCart is a simple e-commerce platform built with Next.js, Express.js, and MongoDB featuring product management CRUD operations, cart and order management, admin dashboard functionality, Cloudinary image uploads, and Khalti test payment integration.",
-    tags: ["MERN Stack", "E-commerce", "Cloudinary", "Online Payment (Khalti)"],
+    name: "AI Platform",
+    desc: "AI Platform is a full-stack AI web app built using React.js and FastAPI with three tools: a JWT-authenticated Flight AI with LLM tool-calling and search history, an Argumentative AI for real-time streaming debates, and a Brochure Maker that generates downloadable marketing content from the website URL.",
+    tags: ["Tool-Calling", "Streaming Responses", "JWT Authentication"],
     year: "2024",
-    image: "/quikCart.png",
-    url: "https://github.com/samiradh058/E-Commerce",
+    image: "/ai_platform.png",
+    url: "https://github.com/samiradh058/AI-Platform",
   },
 ];
 
