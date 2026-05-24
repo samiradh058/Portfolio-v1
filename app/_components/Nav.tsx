@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from "@iconify/react";
 
@@ -16,6 +20,17 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
 
+  const goToSection = (href: string) => {
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    window.history.pushState(null, "", href);
+    window.requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    setOpen(false);
+  };
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 18);
     onScroll();
@@ -25,7 +40,7 @@ export default function Nav() {
 
   useEffect(() => {
     if (!open) return;
-    const handleClick = (e: MouseEvent) => {
+    const handleClick = (e: globalThis.MouseEvent) => {
       if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
@@ -49,7 +64,7 @@ export default function Nav() {
         {/* Wordmark */}
         <a
           href="#"
-          className="font-serif text-[1.75rem] font-light tracking-tight text-[var(--foreground)] leading-none"
+          className="font-serif text-[1.75rem] font-light tracking-tight text-foreground leading-none"
         >
           Samir Adhikari
         </a>
@@ -57,13 +72,14 @@ export default function Nav() {
         {/* Desktop nav links */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => (
-            <a
+            <button
               key={l.label}
-              href={l.href}
-              className="text-[11px] font-sans tracking-[0.12em] uppercase text-[var(--foreground)] opacity-50 hover:opacity-100 transition-opacity duration-200"
+              type="button"
+              onClick={() => goToSection(l.href)}
+              className="text-[11px] font-sans tracking-[0.12em] uppercase text-foreground opacity-50 hover:opacity-100 transition-opacity duration-200"
             >
               {l.label}
-            </a>
+            </button>
           ))}
         </nav>
 
@@ -72,7 +88,7 @@ export default function Nav() {
           <a
             href="/Samir_Adhikari_CV.pdf"
             download
-            className="relative flex items-center justify-center font-sans text-[11px] tracking-[0.09em] px-5 py-2 rounded-full border border-foreground text-foreground hover:translate-y-[-2px] transition-transform duration-200 text-center group pr-6"
+            className="relative flex items-center justify-center font-sans text-[11px] tracking-[0.09em] px-5 py-2 rounded-full border border-foreground text-foreground hover:-translate-y-0.5 transition-transform duration-200 text-center group pr-6"
           >
             <span className="mx-auto">Download Resume</span>
             <Icon
@@ -82,7 +98,7 @@ export default function Nav() {
           </a>
           <a
             href="mailto:adhikarisamir68@gmail.com"
-            className="font-sans text-[11px] tracking-[0.09em] px-5 py-2 rounded-full bg-foreground text-background hover:translate-y-[-2px] transition-transform duration-200 text-center"
+            className="font-sans text-[11px] tracking-[0.09em] px-5 py-2 rounded-full bg-foreground text-background hover:-translate-y-0.5 transition-transform duration-200 text-center"
           >
             Hire me
           </a>
@@ -91,23 +107,23 @@ export default function Nav() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8"
+          className="md:hidden flex flex-col justify-center gap-1.25 w-8 h-8"
           aria-label="Toggle menu"
         >
           <motion.span
             animate={open ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
             transition={{ duration: 0.25 }}
-            className="block h-px w-6 bg-[var(--foreground)] origin-center"
+            className="block h-px w-6 bg-foreground origin-center"
           />
           <motion.span
             animate={open ? { opacity: 0 } : { opacity: 1 }}
             transition={{ duration: 0.2 }}
-            className="block h-px w-6 bg-[var(--foreground)]"
+            className="block h-px w-6 bg-foreground"
           />
           <motion.span
             animate={open ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
             transition={{ duration: 0.25 }}
-            className="block h-px w-6 bg-[var(--foreground)] origin-center"
+            className="block h-px w-6 bg-foreground origin-center"
           />
         </button>
       </div>
@@ -120,32 +136,32 @@ export default function Nav() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.25, 0, 0.2, 1] }}
-            className="md:hidden overflow-hidden bg-[var(--background)] border-b border-[var(--surface)]"
+            className="md:hidden overflow-hidden bg-background border-b border-surface"
           >
             <div className="px-6 py-6 flex flex-col gap-5">
               {navLinks.map((l) => (
-                <a
+                <button
                   key={l.label}
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="font-sans text-[12px] tracking-[0.1em] uppercase text-[var(--foreground)] opacity-60 hover:opacity-100 transition-opacity duration-200"
+                  type="button"
+                  onClick={() => goToSection(l.href)}
+                  className="self-start w-fit text-left font-sans text-[12px] tracking-widest uppercase text-foreground opacity-60 hover:opacity-100 transition-opacity duration-200"
                 >
                   {l.label}
-                </a>
+                </button>
               ))}
 
-              <div className="flex flex-col gap-3 pt-2 border-t border-[var(--surface)]">
+              <div className="flex flex-col gap-3 pt-2 border-t border-surface">
                 <a
                   href="/Samir_Adhikari_CV.pdf"
                   download
-                  className="font-sans text-[12px] tracking-[0.06em] px-5 py-2.5 rounded-full border border-[var(--foreground)] text-[var(--foreground)] text-center hover:bg-[var(--surface)] transition-colors duration-200"
+                  className="font-sans text-[12px] tracking-[0.06em] px-5 py-2.5 rounded-full border border-foreground text-foreground text-center hover:bg-surface transition-colors duration-200"
                 >
                   Download Resume ↓
                 </a>
                 <a
                   href="mailto:adhikarisamir68@gmail.com"
                   onClick={() => setOpen(false)}
-                  className="font-sans text-[12px] tracking-[0.06em] px-5 py-2.5 rounded-full bg-[var(--foreground)] text-[var(--background)] text-center hover:opacity-80 transition-opacity duration-200"
+                  className="font-sans text-[12px] tracking-[0.06em] px-5 py-2.5 rounded-full bg-foreground text-background text-center hover:opacity-80 transition-opacity duration-200"
                 >
                   Hire me
                 </a>

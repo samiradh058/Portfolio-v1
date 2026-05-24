@@ -12,6 +12,10 @@
   --accent: #a84a22;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -33,6 +37,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
   letter-spacing: -0.01em;
+}
+
+section[id] {
+  scroll-margin-top: 5.5rem;
 }
 
 ::selection {
