@@ -145,9 +145,6 @@ export default function Work() {
             <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] leading-[1.18] tracking-[-0.025em] text-foreground">
               Personal projects
             </h2>
-            {/* <span className="font-mono text-[11px] tracking-[0.1em] text-foreground/50 sm:self-end">
-              {personalProjects.length} projects
-            </span> */}
           </motion.div>
 
           <motion.div
