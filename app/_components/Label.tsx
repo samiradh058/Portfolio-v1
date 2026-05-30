@@ -10,9 +10,9 @@ export default function Label({ num, text, light = false }: LabelProps) {
       <span className="font-mono text-[10px] tracking-[0.14em] text-accent">
         {num}
       </span>
-      <div className={`w-4 h-px ${light ? "bg-white/15" : "bg-dim"}`} />
+      <div className={`w-4 h-px ${light ? "bg-background/20" : "bg-dim"}`} />
       <span
-        className={`font-sans text-[10px] tracking-[0.2em] uppercase ${light ? "text-dim" : "text-ink-mid"}`}
+        className={`font-sans text-[11px] font-medium tracking-[0.2em] uppercase ${light ? "text-background/60" : "text-dim"}`}
       >
         {text}
       </span>

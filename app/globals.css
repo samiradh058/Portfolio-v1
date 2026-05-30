@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #efeeec;
-  --foreground: #18140f;
+  --background: #fafafa; /* zinc-50 */
+  --foreground: #09090b; /* zinc-950 */
 
-  --surface: #e2d9c4;
+  --surface: #f4f4f5; /* zinc-100 */
 
-  --cream: #f1e9d2;
-  --dim: #c9c9c9;
+  --border: #e4e4e7; /* zinc-200 */
+  --dim: #71717a; /* zinc-500 */
 
-  --accent: #a84a22;
+  --accent: #2563eb; /* blue-600 */
 }
 
 html {
@@ -22,7 +22,7 @@ html {
 
   --color-surface: var(--surface);
 
-  --color-cream: var(--cream);
+  --color-border: var(--border);
   --color-dim: var(--dim);
 
   --color-accent: var(--accent);
@@ -44,8 +44,8 @@ section[id] {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 38%, white);
-  color: var(--ink);
+  background: var(--accent);
+  color: #fff;
 }
 
 @keyframes fade-up {
@@ -61,4 +61,48 @@ section[id] {
 
 .reveal-soft {
   animation: fade-up 0.7s cubic-bezier(0.25, 0, 0.2, 1) both;
+}
+
+.fill-sides {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.2s ease;
+}
+
+.fill-sides::before,
+.fill-sides::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: var(--fill, var(--foreground));
+  transform: scaleX(0);
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+}
+
+.fill-sides::before {
+  left: 0;
+  transform-origin: left;
+}
+
+.fill-sides::after {
+  right: 0;
+  transform-origin: right;
+}
+
+.fill-sides:hover::before,
+.fill-sides:hover::after {
+  transform: scaleX(1);
+}
+
+.fill-sides:hover {
+  color: var(--fill-text, var(--background));
+}
+
+.fill-sides > span {
+  position: relative;
+  z-index: 1;
 }

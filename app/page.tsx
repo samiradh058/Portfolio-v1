@@ -91,7 +91,7 @@ export default function Home() {
           }
           transition={{ duration: 0.55, ease }}
         />
-        <motion.h1
+        <motion.p
           style={{
             fontFamily: SERIF,
             fontSize: "clamp(1.8rem, 4vw, 3rem)",
@@ -101,13 +101,14 @@ export default function Home() {
             lineHeight: 1,
             marginBottom: "0.25rem",
           }}
+          aria-hidden="true"
           animate={
             split ? { scale: 2.2, opacity: 0 } : { scale: 1, opacity: 1 }
           }
           transition={{ duration, ease }}
         >
           Samir Adhikari
-        </motion.h1>
+        </motion.p>
       </motion.div>
 
       {/*  Bottom curtain  */}
@@ -132,45 +133,55 @@ export default function Home() {
           transition={{ duration: 0.55, ease }}
         />
         <motion.p
-          className="overflow-hidden flex text-background"
-          style={{
-            fontFamily: MONO,
-            fontSize: "clamp(0.65rem, 1.4vw, 0.8rem)",
-            letterSpacing: "0.26em",
-            textTransform: "uppercase",
-            marginTop: "0.2rem",
-          }}
-          initial="hidden"
-          animate={split ? "split" : "visible"}
+  className="overflow-hidden flex flex-wrap justify-center text-background"
+  style={{
+    fontFamily: MONO,
+    fontSize: "clamp(0.65rem, 1.4vw, 0.8rem)",
+    letterSpacing: "0.26em",
+    textTransform: "uppercase",
+    marginTop: "0.2rem",
+
+    // 🔥 IMPORTANT FIX
+    wordBreak: "keep-all",
+    overflowWrap: "normal",
+    whiteSpace: "normal",
+  }}
+  initial="hidden"
+  animate={split ? "split" : "visible"}
+  variants={{
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: staggerDelay,
+        delayChildren: 0.1,
+      },
+    },
+    split: { transition: { duration: 0 } },
+  }}
+>
+  {text.split(" ").map((word, wordIndex) => (
+    <span key={wordIndex} className="flex mr-[0.6em]">
+      {word.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          className="inline-block"
+          style={{ whiteSpace: "pre" }}
           variants={{
-            hidden: {},
+            hidden: { opacity: 0, y: 14 },
             visible: {
-              transition: { staggerChildren: staggerDelay, delayChildren: 0.1 },
+              opacity: 1,
+              y: 0,
+              transition: { duration: charDuration, ease: "easeOut" },
             },
-            split: { transition: { duration: 0 } },
+            split: { opacity: 1, y: 0 },
           }}
         >
-          <span className="break-words sm:break-normal text-center px-4">
-            {text.split("").map((char, i) => (
-              <motion.span
-                key={i}
-                className="inline-block"
-                style={{ whiteSpace: "pre" }}
-                variants={{
-                  hidden: { opacity: 0, y: 14 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: charDuration, ease: "easeOut" },
-                  },
-                  split: { opacity: 1, y: 0 },
-                }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </span>
-        </motion.p>
+          {char}
+        </motion.span>
+      ))}
+    </span>
+  ))}
+</motion.p>
       </motion.div>
     </div>
   );

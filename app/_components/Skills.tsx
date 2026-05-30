@@ -39,7 +39,7 @@ function SkillRow({
 
   return (
     <div
-      className="border-t border-foreground/14"
+      className="border-t border-border"
       onMouseEnter={() => setOpen(cat)}
       onMouseLeave={() => setOpen(null)}
     >
@@ -66,7 +66,7 @@ function SkillRow({
             className={`w-6 h-6 flex items-center justify-center rounded-full border text-sm font-light leading-none transition-all duration-300 ${
               isOpen
                 ? "border-accent text-accent rotate-45"
-                : "border-foreground/20 text-foreground/50"
+                : "border-border text-dim"
             }`}
           >
             +
@@ -96,7 +96,7 @@ function SkillRow({
                     delay: i * 0.04,
                     ease: "easeOut",
                   }}
-                  className="font-sans text-[13px] px-4 py-2 rounded-full bg-background border border-foreground/14 text-foreground/60 hover:border-accent hover:text-accent transition-colors duration-200 cursor-default"
+                  className="font-sans text-[13px] px-4 py-2 rounded-full bg-surface border border-border text-dim hover:border-accent/20 hover:text-accent transition-colors duration-200 cursor-default"
                 >
                   {item}
                 </motion.span>
@@ -118,8 +118,10 @@ export default function Skills() {
     <section
       id="skills"
       ref={ref}
-      className="max-w-[1280px] mx-auto px-6 sm:px-10 py-16 sm:py-[6.5rem]"
+      className="bg-white"
     >
+            <div className="max-w-7xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+
       <motion.div
         initial="hidden"
         animate={inView ? "show" : "hidden"}
@@ -176,6 +178,7 @@ export default function Skills() {
           </div>
         </motion.div>
       </motion.div>
+      </div>
     </section>
   );
 }

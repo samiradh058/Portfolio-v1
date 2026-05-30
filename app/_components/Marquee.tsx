@@ -7,7 +7,7 @@ export default function Marquee() {
   const items = [...marqueeItems, ...marqueeItems];
 
   return (
-    <div className="border-t border-b border-foreground/14 py-3 overflow-hidden">
+    <div className="border-t border-b border-border py-4 bg-surface/30 overflow-hidden">
       <motion.div
         animate={{ x: ["0%", "-50%"] }}
         transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
@@ -16,7 +16,7 @@ export default function Marquee() {
         {items.map((item, i) => (
           <span
             key={i}
-            className="font-sans text-[11px] tracking-[0.12em] text-foreground/60 flex items-center gap-6 px-6 whitespace-nowrap"
+            className="font-sans text-[12px] font-medium tracking-[0.12em] text-dim flex items-center gap-6 px-6 whitespace-nowrap uppercase"
           >
             {item}
             <span className="w-1 h-1 rounded-full bg-accent inline-block shrink-0" />

@@ -13,27 +13,46 @@ import {
 } from "../_const/data";
 
 const fade = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 18 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0, 0.2, 1] as const },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
 const stag = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
 
-// ─── Shared Tags ──────────────────────────────────────────────────────────────
+// ───────────────────────── Types ─────────────────────────
+type Project = {
+  id: string;
+  name: string;
+  desc: string;
+  image: string;
+  tags: string[];
+  url?: string;
+  year?: string;
+};
+
+type Experience = {
+  company: string;
+  location: string;
+  from: string;
+  to: string;
+  summary: string;
+};
+
+// ───────────────────────── Tags ─────────────────────────
 function Tags({ tags }: { tags: string[] }) {
   return (
-    <div className="flex flex-wrap gap-[0.4rem]">
+    <div className="flex flex-wrap gap-2">
       {tags.map((tag) => (
         <span
           key={tag}
-          className="font-sans text-[11px] px-[10px] py-[3px] rounded-full border border-foreground/14 text-foreground/60 bg-foreground/5"
+          className="text-[11px] px-3 py-1 rounded-full border border-foreground/10 bg-white/40 backdrop-blur-md text-foreground/60"
         >
           {tag}
         </span>
@@ -42,92 +61,168 @@ function Tags({ tags }: { tags: string[] }) {
   );
 }
 
-// ─── Shared image + content shell ─────────────────────────────────────────────
-function CardShell({
-  image,
-  name,
-  desc,
-  tags,
-  badge,
-  href,
-}: {
-  image: string;
-  name: string;
-  desc: string;
-  tags: string[];
-  badge: React.ReactNode;
-  href?: string;
-}) {
-  const inner = (
-    <>
+// ───────────────────────── Featured ─────────────────────────
+function FeaturedProject({ project }: { project: Project }) {
+  return (
+    <motion.a
+      variants={fade}
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative grid lg:grid-cols-2 rounded-[28px] overflow-hidden border border-foreground/10 bg-white/50 backdrop-blur-xl hover:-translate-y-1 hover:shadow-sm hover:border-accent/20 transition duration-300"
+    >
       {/* Image */}
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-[16/11] overflow-hidden">
         <Image
-          width={800}
-          height={500}
-          src={image}
-          alt={name}
-          className={`w-full h-full object-cover transition-transform duration-500 ${href ? "group-hover:scale-105" : ""}`}
+          src={project.image}
+          alt={project.name}
+          fill
+          className="object-cover group-hover:scale-[1.04] transition duration-700"
         />
-        {href && (
-          <div className="absolute inset-0 bg-foreground/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span className="flex items-center font-sans text-[13px] tracking-[0.08em] px-5 py-2 rounded-full bg-background text-foreground">
-              View <Icon icon="mdi:arrow-right" />
+
+        {/* hover CTA */}
+       {project.url && (
+          <div className="absolute inset-0 flex items-end justify-end p-4 opacity-0 group-hover:opacity-100 transition duration-300">
+            <span className="flex items-center gap-2 text-[11px] tracking-[0.12em] uppercase px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-black/10 text-black shadow-sm">
+              View Project
+              <Icon icon="mdi:arrow-top-right" className="text-[14px]" />
             </span>
           </div>
         )}
       </div>
 
       {/* Content */}
-      <div className="p-5 sm:p-6 flex flex-col gap-3 flex-1">
-        <div className="flex justify-between items-start gap-4">
-          <h3 className="font-serif text-[1.25rem] sm:text-[1.35rem] font-normal tracking-[-0.02em] text-foreground">
-            {name}
+      <div className="p-6 sm:p-10 flex flex-col justify-between">
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.14em] text-foreground/50">
+            Featured Project
+          </p>
+
+          <h3 className="mt-3 font-serif text-[2rem] sm:text-[2.6rem] leading-[1.1] text-foreground">
+            {project.name}
           </h3>
-          {badge}
+
+          <p className="mt-4 text-foreground/60 leading-[1.7] text-[14px] sm:text-[15px]">
+            {project.desc}
+          </p>
         </div>
-        <p className="font-sans text-[13px] leading-[1.65] text-foreground/60">
-          {desc}
-        </p>
-        <div className="mt-auto pt-2">
-          <Tags tags={tags} />
+
+        <div className="mt-6 flex items-center justify-between gap-4">
+          <Tags tags={project.tags} />
+
+          {project.year && (
+            <span className="text-[11px] tracking-[0.12em] text-foreground/40">
+              {project.year}
+            </span>
+          )}
         </div>
       </div>
-    </>
+    </motion.a>
   );
+}
 
-  if (href) {
-    return (
-      <motion.a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        variants={fade}
-        className="group flex flex-col h-full border border-foreground/14 rounded-[18px] bg-background overflow-hidden cursor-pointer"
-      >
-        {inner}
-      </motion.a>
-    );
-  }
+// ───────────────────────── Card ─────────────────────────
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <motion.a
+      variants={fade}
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative flex flex-col rounded-[22px] overflow-hidden border border-foreground/10 bg-white/40 backdrop-blur-xl hover:-translate-y-1 transition duration-300 hover:border-accent/20 hover:shadow-sm"
+    >
+      {/* image */}
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <Image
+          src={project.image}
+          alt={project.name}
+          fill
+          className="object-cover group-hover:scale-105 transition duration-500"
+        />
 
+        {/* hover CTA */}
+        {project.url && (
+          <div className="absolute inset-0 flex items-end justify-end p-4 opacity-0 group-hover:opacity-100 transition duration-300">
+            <span className="flex items-center gap-2 text-[11px] tracking-[0.12em] uppercase px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-black/10 text-black shadow-sm">
+              View Project
+              <Icon icon="mdi:arrow-top-right" className="text-[14px]" />
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* content */}
+      <div className="p-5 flex flex-col flex-1">
+        {/* title row */}
+        <div className="flex items-start justify-between gap-3">
+          <h4 className="font-serif text-[1.2rem] text-foreground leading-snug">
+            {project.name}
+          </h4>
+
+          <span className="text-[11px] tracking-[0.12em] text-foreground/40 whitespace-nowrap">
+            {project.year ? project.year : <span className="border border-dashed border-accent/20 bg-accent/5 px-2 rounded-full">NDA Restricted</span>}
+          </span>
+        </div>
+
+        {/* description */}
+        <p className="mt-2 text-[13px] text-foreground/60 leading-[1.6]">
+          {project.desc}
+        </p>
+
+        {/* spacer pushes tags down */}
+        <div className="flex-1" />
+
+        {/* tags ALWAYS bottom */}
+        <div className="mt-4">
+          <Tags tags={project.tags} />
+        </div>
+      </div>
+    </motion.a>
+  );
+}
+
+// ───────────────────────── Experience ─────────────────────────
+function ExperienceItem({ item }: { item: Experience }) {
   return (
     <motion.div
       variants={fade}
-      className="flex flex-col h-full border border-foreground/14 rounded-[18px] bg-background overflow-hidden"
+      className="relative pl-6 border-l border-foreground/10"
     >
-      {inner}
+      <span className="absolute left-[-5px] top-2 h-2.5 w-2.5 rounded-full bg-accent" />
+
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+        <div>
+          <h4 className="font-serif text-[1.3rem] text-foreground">
+            {item.company}
+          </h4>
+          <p className="text-[13px] text-foreground/60">
+            {item.location}
+          </p>
+        </div>
+
+        <span className="text-[11px] tracking-[0.12em] text-foreground/40">
+          {item.from} — {item.to}
+        </span>
+      </div>
+
+      <p className="mt-3 text-[14px] leading-[1.7] text-foreground/60">
+        {item.summary}
+      </p>
     </motion.div>
   );
 }
 
-// ─── Section ──────────────────────────────────────────────────────────────────
+// ───────────────────────── Section ─────────────────────────
 export default function Work() {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.08 });
+  const inView = useInView(ref, { once: true, amount: 0.1 });
+
+  const featured = personalProjects[0];
+  const restPersonal = personalProjects.slice(1);
 
   return (
-    <section id="work" ref={ref} className="bg-foreground/5">
-      <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-16 sm:py-[6.5rem]">
+    <section id="work" ref={ref} className="">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
         <motion.div
           initial="hidden"
           animate={inView ? "show" : "hidden"}
@@ -137,98 +232,60 @@ export default function Work() {
             <Label num="02" text="Work" />
           </motion.div>
 
-          {/* ── Personal ── */}
-          <motion.div
-            variants={fade}
-            className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 mb-8"
-          >
-            <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] leading-[1.18] tracking-[-0.025em] text-foreground">
-              Personal projects
+          {/* heading */}
+          <motion.div variants={fade} className="mb-14">
+            <h2 className="font-serif font-light text-[clamp(2.2rem,4vw,3.6rem)] leading-[1.1] text-foreground">
+              Selected work
             </h2>
+            <p className="mt-4 text-foreground/60 max-w-xl">
+              A collection of projects focused on performance, scalability,
+              and clean user experience.
+            </p>
           </motion.div>
 
+          {/* featured */}
+          <FeaturedProject project={featured} />
+
+          {/* personal */}
           <motion.div
             variants={stag}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-16"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10"
           >
-            {personalProjects.map((p) => (
-              <CardShell
-                key={p.id}
-                image={p.image}
-                name={p.name}
-                desc={p.desc}
-                tags={p.tags}
-                href={p.url}
-                badge={
-                  <span className="font-mono text-[11px] tracking-[0.1em] text-foreground/50 shrink-0">
-                    {p.year}
-                  </span>
-                }
-              />
+            {restPersonal.map((p) => (
+              <ProjectCard key={p.id} project={p} />
             ))}
           </motion.div>
 
-          {/* ── Experience ── */}
-          <motion.div
-            variants={fade}
-            className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 mb-6"
-          >
-            <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] leading-[1.18] tracking-[-0.025em] text-foreground">
+          {/* experience */}
+          <motion.div variants={fade} className="mt-24">
+            <h3 className="font-serif text-[2rem] text-foreground mb-10">
               Experience
-            </h2>
+            </h3>
+
+            <div className="space-y-10">
+              {workExperience.map((item) => (
+                <ExperienceItem
+                  key={`${item.company}-${item.from}`}
+                  item={item}
+                />
+              ))}
+            </div>
           </motion.div>
 
-          <motion.div variants={stag} className="grid grid-cols-1 gap-5 mb-16">
-            {workExperience.map((item) => (
-              <motion.div
-                key={`${item.company}-${item.from}`}
-                variants={fade}
-                className="flex flex-col gap-3 border border-foreground/14 rounded-[18px] bg-background p-5 sm:p-6"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                  <div>
-                    <h3 className="font-serif text-[1.3rem] sm:text-[1.4rem] font-normal tracking-[-0.02em] text-foreground">
-                      {item.company}
-                    </h3>
-                    <p className="font-sans text-[13px] leading-[1.6] text-foreground/60">
-                      {item.location}
-                    </p>
-                  </div>
-                  <span className="font-mono text-[11px] tracking-[0.1em] text-foreground/50 shrink-0">
-                    {item.from} - {item.to}
-                  </span>
-                </div>
-                <p className="font-sans text-[13px] leading-[1.7] text-foreground/70">
-                  {item.summary}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+          {/* professional */}
+          <motion.div variants={fade} className="mt-24">
+            <h3 className="font-serif text-[2rem] text-foreground mb-10">
+              Professional Work
+            </h3>
 
-          {/* ── Commercial ── */}
-          <motion.div
-            variants={fade}
-            className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3"
-          ></motion.div>
-
-          <motion.div
-            variants={stag}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
-          >
-            {professionalProjects.map((p) => (
-              <CardShell
-                key={p.id}
-                image={p.image}
-                name={p.name}
-                desc={p.desc}
-                tags={p.tags}
-                badge={
-                  <span className="font-mono text-[10px] tracking-[0.12em] px-3 py-1 rounded-full border border-accent/40 text-accent bg-accent/5 shrink-0 whitespace-nowrap">
-                    Confidential
-                  </span>
-                }
-              />
-            ))}
+            <motion.div
+              variants={stag}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {professionalProjects.map((p) => (
+                <ProjectCard key={p.id} project={p} />
+              ))}
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>

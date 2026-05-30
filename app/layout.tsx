@@ -22,9 +22,19 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Samir Adhikari",
+  title: "Samir Adhikari | Full-Stack Developer in Pokhara, Nepal",
   description:
-    "A portfolio website showcasing the projects and skills of Samir, a software developer specializing in web development and design.",
+    "Samir Adhikari is a frontend and full-stack developer in Pokhara, Nepal, building scalable web experiences with React, Next.js, and modern backend systems.",
+  keywords: [
+    "Samir Adhikari",
+    "frontend developer",
+    "full-stack developer",
+    "Pokhara",
+    "Nepal",
+    "React",
+    "Next.js",
+    "FastAPI",
+  ],
 };
 
 export default function RootLayout({

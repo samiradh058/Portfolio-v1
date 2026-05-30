@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Icon } from "@iconify/react";
@@ -45,7 +46,7 @@ export default function Contact() {
       >
         <motion.div variants={fade}>
           <div className="relative bg-foreground overflow-hidden">
-            <div className="mx-auto max-w-7xl px-6 py-12 sm:px-12 lg:px-20 sm:py-20">
+            <div className="mx-auto max-w-7xl px-6 py-12 sm:px-10 sm:py-20">
               <div className="relative z-10">
                 <Label num="04" text="Let's Collaborate" light />
 
@@ -71,9 +72,13 @@ export default function Contact() {
                   <motion.div variants={fade} className="flex flex-wrap gap-3">
                     <a
                       href="mailto:adhikarisamir68@gmail.com"
-                      className="w-fit flex items-center justify-center rounded-full bg-background px-6 py-3 text-center font-sans text-[13px] tracking-[0.04em] text-foreground hover:translate-y-[-2px] transition-transform duration-200 sm:px-8 sm:py-[14px]"
+                      className="fill-sides w-fit flex items-center justify-center rounded-full border border-background/25 px-6 py-3 text-center font-sans text-[13px] tracking-[0.06em] text-background hover:translate-y-[-2px] transition-all duration-200 sm:px-8 sm:py-[14px]"
+                      style={{
+                        "--fill": "var(--background)",
+                        "--fill-text": "var(--foreground)",
+                      } as CSSProperties}
                     >
-                      adhikarisamir68@gmail.com
+                      <span>adhikarisamir68@gmail.com</span>
                     </a>
                   </motion.div>
                 </div>

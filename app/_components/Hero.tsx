@@ -1,109 +1,131 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { motion } from "framer-motion";
 import { stats } from "../_const/data";
 
 const fade = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 24 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0, 0.2, 1] as const },
+    transition: {
+      duration: 0.65,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
   },
 };
 
-const stag = {
+const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.15,
+    },
+  },
 };
 
 export default function Hero() {
   return (
-    <section className="relative max-w-7xl mx-auto px-6 sm:px-10 pt-16 sm:pt-20 pb-12 sm:pb-16 overflow-hidden">
-      {/* Available pill */}
-      <motion.div
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.55, delay: 0.25 }}
-        className="inline-flex items-center gap-2 mb-4 sm:mb-4 px-4 py-1.5 border border-foreground/14 rounded-full bg-foreground/5 mt-8"
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-accent [animation:pulse_2.2s_ease-in-out_infinite]" />
-        <span className="font-sans text-[11px] tracking-[0.12em] uppercase flex items-center gap-2">
-          Full-Stack Developer{" "}
-          <span className="w-[2px] h-[2px] rounded-full bg-accent inline-block shrink-0" />{" "}
-          Exploring LLMs
-        </span>
-      </motion.div>
+    <section className="relative overflow-hidden bg-white">
+      {/* glow */}
+      <div className="absolute left-[60%] top-0 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[140px] pointer-events-none" />
 
-      {/* Heading + stat cards */}
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={stag}
-        className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8 lg:gap-10 items-end mb-10 sm:mb-12"
-      >
-        <motion.h1
-          variants={fade}
-          className="font-serif font-light leading-[1.02] tracking-[-0.04em] text-[clamp(2.5rem,7vw,6.4rem)] text-foreground"
-        >
-          Shaping elegant,
-          <br />
-          <span className="italic text-accent">reliable</span> digital products
-          <br />
-          with grounded AI depth.
-        </motion.h1>
-
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-10 pt-24 sm:pt-32 pb-20">
         <motion.div
-          variants={fade}
-          className="flex flex-row lg:flex-col gap-2.5 overflow-x-auto pb-1 lg:pb-0 px-2"
+          initial="hidden"
+          animate="show"
+          variants={stagger}
+          className="grid lg:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-16 items-center"
         >
-          {stats.map((s) => (
-            <div
-              key={s.v}
-              className="flex-shrink-0 px-[1.4rem] py-[1.1rem] rounded-[14px] border border-foreground/14 min-w-[120px] lg:min-w-0 transition-transform duration-300 hover:-translate-x-2 bg-foreground/5"
+          {/* LEFT */}
+          <div>
+            {/* pill */}
+            <motion.div
+              variants={fade}
+              className="inline-flex items-center gap-2 mb-8 px-5 py-2 rounded-full
+                         bg-white/60 backdrop-blur-xl border border-black/10 shadow-sm"
             >
-              <p className="font-serif font-light text-[1.9rem] leading-none tracking-[-0.03em] text-foreground">
-                {s.v}
-              </p>
-              <p className="font-sans text-[11px] tracking-[0.07em] text-foreground/60 mt-1">
-                {s.l}
-              </p>
-            </div>
-          ))}
-        </motion.div>
-      </motion.div>
+              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-[11px] uppercase tracking-[0.15em] text-black/70">
+                Open to collaborations
+              </span>
+            </motion.div>
 
-      {/* Bottom row */}
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={stag}
-        className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-6 pt-8 sm:pt-9 border-t border-foreground/14"
-      >
-        <motion.p
-          variants={fade}
-          className="font-sans text-[15px] leading-[1.82] text-foreground/60 max-w-[540px]"
-        >
-          Full-stack developer with 3+ years in frontend and 1 year of
-          professional experience. Currently focused on backend systems, Python,
-          LLMs, and web automation.
-        </motion.p>
+            {/* identity block */}
+            <motion.div variants={fade}>
+              <h1 className="font-serif font-normal text-[clamp(3rem,6vw,5.5rem)] leading-[0.95] tracking-[-0.04em]">
+                Samir Adhikari
+              </h1>
 
-        <motion.div variants={fade} className="flex gap-[0.65rem]">
-          <a
-            href="#work"
-            className="font-sans text-[13px] tracking-[0.08em] px-6 sm:px-7 py-[13px] rounded-full bg-foreground text-background hover:-translate-y-0.5 hover:opacity-90 transition-all duration-300"
+              <p className="mt-5 text-[18px] sm:text-[20px] text-black/70 leading-[1.6]">
+                Full-Stack Developer based in Pokhara, Nepal
+              </p>
+
+              <p className="mt-6 max-w-[600px] text-[15px] leading-[1.9] text-black/60">
+                I build scalable web systems with modern frontend and backend
+                technologies, focusing on performance, clean architecture,
+                and practical AI-driven solutions.
+              </p>
+            </motion.div>
+
+            {/* buttons */}
+            <motion.div variants={fade} className="flex flex-wrap gap-4 mt-10">
+              <a
+                href="#work"
+                className="rounded-full bg-foreground text-background px-7 py-[14px]
+                           text-sm tracking-[0.06em]
+                           hover:-translate-y-1 hover:shadow-md transition-all"
+              >
+                View Work
+              </a>
+
+              <a
+                href="#contact"
+                className="rounded-full px-7 py-[14px]
+                           text-sm tracking-[0.06em]
+                           border border-foreground/15
+                           bg-white/40 backdrop-blur-md
+                           text-foreground
+                           hover:-translate-y-1 hover:border-foreground/30 hover:bg-white/60
+                           transition-all"
+              >
+                Let&apos;s Talk
+              </a>
+            </motion.div>
+          </div>
+
+          {/* RIGHT */}
+          <motion.div
+            variants={fade}
+            className="lg:justify-self-end w-full max-w-[420px] flex flex-col gap-3"
           >
-            View Work
-          </a>
-          <a
-            href="#contact"
-            className="font-sans text-[13px] tracking-[0.08em] px-6 sm:px-7 py-[13px] rounded-full border border-foreground/20 text-foreground hover:-translate-y-0.5 transition-all duration-300"
-          >
-            Let&apos;s Talk
-          </a>
+            <p className="text-[11px] uppercase tracking-[0.14em] text-black/50 mb-2">
+              Developer Stats
+            </p>
+
+            {stats.map((s) => (
+              <div
+                key={s.v}
+                className="group px-5 py-4 rounded-2xl
+                           bg-white/60 backdrop-blur-xl
+                           border border-black/10
+                           shadow-sm hover:shadow-md
+                           hover:-translate-y-1 transition"
+              >
+                <h4 className="font-serif text-[2rem] leading-none text-black">
+                  {s.v}
+                </h4>
+
+                <p className="mt-2 text-[10px] uppercase tracking-[0.12em] text-black/50">
+                  {s.l}
+                </p>
+              </div>
+            ))}
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }
