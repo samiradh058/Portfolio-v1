@@ -53,7 +53,8 @@ export default function Nav() {
   useEffect(() => {
     const getActiveSection = () => {
       const marker = window.scrollY + window.innerHeight * 0.38;
-      let current = sectionIds[0] ?? "";
+      // start empty so sections below the hero aren't preselected
+      let current = "";
 
       for (const id of sectionIds) {
         const section = document.getElementById(id);

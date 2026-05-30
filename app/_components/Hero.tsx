@@ -28,11 +28,11 @@ const stagger = {
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-white">
+<section className="relative overflow-hidden bg-white min-h-[92vh] flex flex-col">
       {/* glow */}
       <div className="absolute left-[60%] top-0 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[140px] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-6 sm:px-10 pt-24 sm:pt-32 pb-20">
+<div className="relative max-w-7xl mx-auto px-6 sm:px-10 pt-24 sm:pt-32 pb-20 flex-1 flex flex-col justify-center w-full">
         <motion.div
           initial="hidden"
           animate="show"

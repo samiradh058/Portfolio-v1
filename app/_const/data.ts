@@ -110,6 +110,7 @@ export const professionalProjects = [
 export const workExperience = [
   {
     company: "WOW Finstack Nepal",
+    website: "https://wowfinstacknepal.com/",
     location: "Nayabazar, Pokhara",
     from: "May 2025",
     to: "May 2026",

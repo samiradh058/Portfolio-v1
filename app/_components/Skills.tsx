@@ -43,7 +43,6 @@ function SkillRow({
       onMouseEnter={() => setOpen(cat)}
       onMouseLeave={() => setOpen(null)}
     >
-      {/* Header */}
       <div className="flex items-center justify-between py-5 sm:py-6 cursor-default">
         <div className="flex items-center gap-6">
           <span className="font-mono text-[11px] tracking-[0.14em] text-foreground/30 w-6">
@@ -74,7 +73,6 @@ function SkillRow({
         </div>
       </div>
 
-      {/* Expanded pills */}
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
@@ -91,11 +89,7 @@ function SkillRow({
                   key={item}
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.22,
-                    delay: i * 0.04,
-                    ease: "easeOut",
-                  }}
+                  transition={{ duration: 0.22, delay: i * 0.04, ease: "easeOut" }}
                   className="font-sans text-[13px] px-4 py-2 rounded-full bg-surface border border-border text-dim hover:border-accent/20 hover:text-accent transition-colors duration-200 cursor-default"
                 >
                   {item}
@@ -109,48 +103,75 @@ function SkillRow({
   );
 }
 
-export default function Skills() {
-  const [open, setOpen] = useState<string | null>(null);
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.1 });
+// ── reusable animated row wrapper ──
+function AnimatedSkillRow({
+  cat,
+  items,
+  idx,
+  open,
+  setOpen,
+}: {
+  cat: string;
+  items: readonly string[];
+  idx: number;
+  open: string | null;
+  setOpen: (v: string | null) => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
 
   return (
-    <section
-      id="skills"
+    <motion.div
       ref={ref}
-      className="bg-white"
+      initial="hidden"
+      animate={inView ? "show" : "hidden"}
+      variants={fade}
     >
-            <div className="max-w-7xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+      <SkillRow cat={cat} items={items} idx={idx} open={open} setOpen={setOpen} />
+    </motion.div>
+  );
+}
 
-      <motion.div
-        initial="hidden"
-        animate={inView ? "show" : "hidden"}
-        variants={stag}
-      >
-        <motion.div variants={fade}>
-          <Label num="03" text="Skills & Stack" />
-        </motion.div>
+export default function Skills() {
+  const [open, setOpen] = useState<string | null>(null);
 
+  const headingRef = useRef<HTMLDivElement>(null);
+  const headingInView = useInView(headingRef, { once: true, amount: 0.3 });
+
+  return (
+    <section id="skills" className="bg-white">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+
+        {/* Heading */}
         <motion.div
-          variants={fade}
-          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-12"
-        >
-          <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] tracking-[-0.025em] text-foreground">
-            Core stack and <em className="italic">learning focus.</em>
-          </h2>
-          <p className="font-mono text-[10px] tracking-[0.16em] text-foreground/50 uppercase">
-            {skills.reduce((a, s) => a + s.items.length, 0)} technologies
-          </p>
-        </motion.div>
-
-        <motion.div
+          ref={headingRef}
+          initial="hidden"
+          animate={headingInView ? "show" : "hidden"}
           variants={stag}
-          className="grid grid-cols-1 md:grid-cols-2 md:gap-x-16"
         >
+          <motion.div variants={fade}>
+            <Label num="03" text="Skills & Stack" />
+          </motion.div>
+
+          <motion.div
+            variants={fade}
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-12"
+          >
+            <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] tracking-[-0.025em] text-foreground">
+              Core stack and <em className="italic">learning focus.</em>
+            </h2>
+            <p className="font-mono text-[10px] tracking-[0.16em] text-foreground/50 uppercase">
+              {skills.reduce((a, s) => a + s.items.length, 0)} technologies
+            </p>
+          </motion.div>
+        </motion.div>
+
+        {/* Columns — each row has its own inView trigger */}
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-16">
           {/* Left column */}
           <div>
             {leftCol.map(({ cat, items }, i) => (
-              <SkillRow
+              <AnimatedSkillRow
                 key={cat}
                 cat={cat}
                 items={items}
@@ -165,7 +186,7 @@ export default function Skills() {
           {/* Right column */}
           <div>
             {rightCol.map(({ cat, items }, i) => (
-              <SkillRow
+              <AnimatedSkillRow
                 key={cat}
                 cat={cat}
                 items={items}
@@ -176,8 +197,8 @@ export default function Skills() {
             ))}
             <div className="border-t border-foreground/14" />
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+
       </div>
     </section>
   );
