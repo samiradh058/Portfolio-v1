@@ -13,11 +13,13 @@ export const stats = [
 
 export const marqueeItems = [
   { label: "Full-Stack Development", icon: "/icons/fullstack.svg" },
+  { label: "JavaScript", icon: "/icons/javascript.svg" },
   { label: "React.js", icon: "/icons/react.svg" },
   { label: "Next.js", icon: "/icons/next.svg" },
+  { label: "Python", icon: "/icons/python.svg" },
+  { label: "FastAPI", icon: "/icons/fastapi.svg" },
   { label: "Node.js", icon: "/icons/node.svg" },
   { label: "NestJS", icon: "/icons/nestjs.svg" },
-  { label: "FastAPI", icon: "/icons/fastapi.svg" },
   { label: "PostgreSQL", icon: "/icons/postgres.svg" },
   { label: "LLMs", icon: "/icons/llm.svg" },
 ];
@@ -110,11 +112,11 @@ export const professionalProjects = [
   },
   {
     id: "w4",
-    name:"Saloon Management System",
+    name: "Saloon Management System",
     icon: "mdi:scissors-cutting",
     desc: "Salon Management System is a comprehensive solution that integrates billing, appointment scheduling,inventory, service, and staff management and transaction tracking. The system is currently in the deployment and client onboarding phase for use in a real business environment.",
     tags: ["React.js", "FastAPI"],
-  }
+  },
 ];
 
 export const workExperience = [

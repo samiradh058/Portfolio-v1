@@ -100,7 +100,7 @@ export default function Home() {
             letterSpacing: "-0.025em",
             color: "var(--foreground)",
             lineHeight: 1,
-            marginBottom: "0.25rem",
+            marginBottom: "0.5rem",
           }}
           aria-hidden="true"
           animate={
@@ -140,7 +140,7 @@ export default function Home() {
             fontSize: "clamp(0.65rem, 1.4vw, 0.8rem)",
             letterSpacing: "0.26em",
             textTransform: "uppercase",
-            marginTop: "0.2rem",
+            marginTop: "0.5rem",
 
             wordBreak: "keep-all",
             overflowWrap: "normal",
