@@ -167,35 +167,42 @@ function ExperienceCard({ project }: { project: Project }) {
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center gap-5 px-5 py-4 rounded-xl border border-glassBorder bg-glass backdrop-blur-xl hover:border-accent/20 hover:bg-glass/80 transition duration-300"
+      className="group flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-5 px-4 lg:px-5 py-4 rounded-xl border border-glassBorder bg-glass backdrop-blur-xl hover:border-accent/20 hover:bg-glass/80 transition duration-300"
     >
-      {/* Icon box */}
-      <div className="shrink-0 flex items-center justify-center w-11 h-11 rounded-lg bg-foreground/5 border border-glassBorder text-foreground/60 group-hover:text-accent transition duration-300">
-        <Icon
-          icon={project.icon ?? "mdi:code-braces"}
-          className="text-[20px]"
-        />
+      {/* Top row: icon + title + desc */}
+      <div className="flex items-start gap-3 flex-1 min-w-0">
+        {/* Icon box */}
+        <div className="shrink-0 flex items-center justify-center w-11 h-11 rounded-lg bg-foreground/5 border border-glassBorder text-foreground/60 group-hover:text-accent transition duration-300">
+          <Icon
+            icon={project.icon ?? "mdi:code-braces"}
+            className="text-[20px]"
+          />
+        </div>
+
+        {/* Title + description */}
+        <div className="flex-1 min-w-0">
+          <h4 className="font-semibold text-foreground text-[0.95rem] leading-snug">
+            {project.name}
+          </h4>
+          <p className="mt-0.5 text-[13px] text-foreground/50">
+            {project.desc}
+          </p>
+        </div>
       </div>
 
-      {/* Title + description */}
-      <div className="flex-1 min-w-0">
-        <h4 className="font-semibold text-foreground text-[0.95rem] leading-snug">
-          {project.name}
-        </h4>
-        <p className="mt-0.5 text-[13px] text-foreground/50">{project.desc}</p>
-      </div>
-
-      {/* Tags */}
-      <div className="shrink-0 flex items-center gap-2">
-        {project.tags?.map((tag) => (
-          <span
-            key={tag}
-            className="text-[11px] font-mono px-2.5 py-1 rounded-md border border-glassBorder bg-background text-foreground/60"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
+      {/* Tags — bottom-right below lg, inline on desktop */}
+      {project.tags && project.tags.length > 0 && (
+        <div className="shrink-0 flex items-center justify-end gap-1.5 lg:justify-start lg:gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="text-[11px] font-mono px-2.5 py-1 rounded-md border border-glassBorder bg-background text-foreground/60 whitespace-nowrap"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
     </motion.a>
   );
 }

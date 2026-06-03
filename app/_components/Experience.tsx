@@ -27,7 +27,6 @@ const stagger = {
 };
 
 export default function Experience() {
-  // separate refs for each part
   const headingRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +65,7 @@ export default function Experience() {
             initial="hidden"
             animate={rightInView ? "show" : "hidden"}
             variants={stagger}
-            className="space-y-8 bg-background p-8 rounded-lg border border-glassBorder"
+            className="space-y-8 bg-background p-6 sm:p-8 rounded-lg border border-glassBorder"
           >
             {[
               {
@@ -80,26 +79,35 @@ export default function Experience() {
               <motion.div
                 key={index}
                 variants={fade}
-                className="relative border-l border-glassBorderLight pl-8 group"
+                className="relative border-l border-glassBorderLight pl-6 sm:pl-8 group"
               >
                 <span className="absolute left-[-6px] top-2 h-3 w-3 rounded-full bg-accent" />
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xl font-medium text-foreground mb-1">
+
+                {/* Title + date (large: same row) */}
+                <div className="flex items-center justify-between gap-2">
+                  <h4 className="text-xl font-medium text-foreground">
                     {item.title}
                   </h4>
-                  <span className="text-sm text-foreground/80 bg-glass border border-glassBorder px-2 py-1 rounded-lg">
+                  <span className="hidden sm:inline-flex text-sm text-foreground/80 bg-glass border border-glassBorder px-2 py-1 rounded-lg whitespace-nowrap">
                     {item.date}
                   </span>
                 </div>
-                <p
-                  className="text-accent/80 leading-8 cursor-pointer group-hover:text-accent"
-                  onClick={() => window.open(item.url, "_blank")}
-                >
-                  {item.company}
-                </p>
-                <p className="mt-4 text-foreground/60 leading-7 w-[calc(100%-2rem)]">
-                  {item.text}
-                </p>
+
+                {/* Company + date (small: date below company) */}
+                <div className="flex flex-col gap-1 mt-1">
+                  <p
+                    className="text-accent/80 leading-8 cursor-pointer group-hover:text-accent"
+                    onClick={() => window.open(item.url, "_blank")}
+                  >
+                    {item.company}
+                  </p>
+                  <span className="sm:hidden text-sm text-foreground/80 bg-glass border border-glassBorder px-2 py-1 rounded-lg self-start whitespace-nowrap">
+                    {item.date}
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p className="mt-4 text-foreground/60 leading-7">{item.text}</p>
               </motion.div>
             ))}
           </motion.div>

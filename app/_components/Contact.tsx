@@ -72,7 +72,7 @@ export default function Contact() {
                   <motion.div variants={fade} className="flex flex-wrap gap-3">
                     <a
                       href="mailto:adhikarisamir68@gmail.com"
-                      className="fill-sides w-fit flex items-center justify-center rounded-full border border-glassBorder bg-glass px-6 py-3 text-center font-sans text-[13px] tracking-[0.06em] transition-all duration-200 sm:px-8 sm:py-[14px]"
+                      className="fill-sides w-fit flex items-center justify-center rounded-full border border-glassBorder bg-glass px-6 py-3 text-center font-sans text-[13px] tracking-[0.06em] transition-all duration-200 sm:px-8 sm:py-[14px] h-fit"
                       style={
                         {
                           "--fill": "var(--background)",
