@@ -15,6 +15,7 @@ const ANIMATION_MS = 1050; // matches duration*1000
 export default function Home() {
   const [split, setSplit] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
+  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
@@ -54,7 +55,7 @@ export default function Home() {
   const duration = 1.05;
 
   const curtainStyle = {
-    background: "var(--foreground)",
+    background: "var(--glass)",
   } satisfies React.CSSProperties;
 
   const text = "Full-Stack Developer | AI and LLM Enthusiast";
@@ -97,7 +98,7 @@ export default function Home() {
             fontSize: "clamp(1.8rem, 4vw, 3rem)",
             fontWeight: 300,
             letterSpacing: "-0.025em",
-            color: "var(--background)",
+            color: "var(--foreground)",
             lineHeight: 1,
             marginBottom: "0.25rem",
           }}
@@ -113,7 +114,7 @@ export default function Home() {
 
       {/*  Bottom curtain  */}
       <motion.div
-        className="fixed left-0 right-0 bottom-0 z-20 pointer-events-none flex flex-col items-center justify-start overflow-hidden"
+        className="fixed left-0 right-0 bottom-0 z-20 pointer-events-none flex flex-col items-center justify-start overflow-hidden bg-glass"
         style={{ height: "50vh", ...curtainStyle }}
         animate={split ? { y: "100%" } : { y: 0 }}
         transition={{ duration, ease }}
@@ -133,55 +134,54 @@ export default function Home() {
           transition={{ duration: 0.55, ease }}
         />
         <motion.p
-  className="overflow-hidden flex flex-wrap justify-center text-background"
-  style={{
-    fontFamily: MONO,
-    fontSize: "clamp(0.65rem, 1.4vw, 0.8rem)",
-    letterSpacing: "0.26em",
-    textTransform: "uppercase",
-    marginTop: "0.2rem",
+          className="overflow-hidden flex flex-wrap justify-center text-foreground"
+          style={{
+            fontFamily: MONO,
+            fontSize: "clamp(0.65rem, 1.4vw, 0.8rem)",
+            letterSpacing: "0.26em",
+            textTransform: "uppercase",
+            marginTop: "0.2rem",
 
-    // 🔥 IMPORTANT FIX
-    wordBreak: "keep-all",
-    overflowWrap: "normal",
-    whiteSpace: "normal",
-  }}
-  initial="hidden"
-  animate={split ? "split" : "visible"}
-  variants={{
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: staggerDelay,
-        delayChildren: 0.1,
-      },
-    },
-    split: { transition: { duration: 0 } },
-  }}
->
-  {text.split(" ").map((word, wordIndex) => (
-    <span key={wordIndex} className="flex mr-[0.6em]">
-      {word.split("").map((char, i) => (
-        <motion.span
-          key={i}
-          className="inline-block"
-          style={{ whiteSpace: "pre" }}
+            wordBreak: "keep-all",
+            overflowWrap: "normal",
+            whiteSpace: "normal",
+          }}
+          initial="hidden"
+          animate={split ? "split" : "visible"}
           variants={{
-            hidden: { opacity: 0, y: 14 },
+            hidden: {},
             visible: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: charDuration, ease: "easeOut" },
+              transition: {
+                staggerChildren: staggerDelay,
+                delayChildren: 0.1,
+              },
             },
-            split: { opacity: 1, y: 0 },
+            split: { transition: { duration: 0 } },
           }}
         >
-          {char}
-        </motion.span>
-      ))}
-    </span>
-  ))}
-</motion.p>
+          {text.split(" ").map((word, wordIndex) => (
+            <span key={wordIndex} className="flex mr-[0.6em]">
+              {word.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  className="inline-block"
+                  style={{ whiteSpace: "pre" }}
+                  variants={{
+                    hidden: { opacity: 0, y: 14 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: charDuration, ease: "easeOut" },
+                    },
+                    split: { opacity: 1, y: 0 },
+                  }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
+          ))}
+        </motion.p>
       </motion.div>
     </div>
   );

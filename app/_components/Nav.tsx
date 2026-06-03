@@ -4,11 +4,13 @@ import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { Icon } from "@iconify/react";
 
 const navLinks = [
   { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
   { label: "Skills", href: "#skills" },
+  { label: "Work", href: "#work" },
+  { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
@@ -140,165 +142,183 @@ export default function Nav() {
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className={`fixed top-0 left-0 right-0 z-50 border-b ${scrolled ? "bg-background/80 backdrop-blur-md border-border" : "bg-transparent border-transparent"} transition-all duration-300`}
+        className={`fixed top-0 left-0 right-0 z-50 border-b ${scrolled ? "bg-background/80 backdrop-blur-md border-glassBorder" : "bg-transparent border-transparent"} transition-all duration-300`}
       >
-      {/* Main bar */}
-      <div
-        className={`max-w-7xl mx-auto px-6 sm:px-10 h-16 flex items-center justify-between transition-all duration-500`}
-      >
-        {/* Wordmark */}
-        <a
-          href="#"
-          aria-label="Samir Adhikari"
-          className="flex items-center"
+        {/* Main bar */}
+        <div
+          className={`max-w-7xl mx-auto px-6 sm:px-10 h-16 flex items-center justify-between transition-all duration-500`}
         >
-          <Image
-            src="/favicon.ico"
-            alt=""
-            width={32}
-            height={32}
-            className="h-8 w-8"
-          />
-          <span
-            className={`ml-3 font-sans text-[11px] tracking-[0.2em] uppercase text-foreground md:hidden whitespace-nowrap overflow-hidden transition-all duration-200 ${open ? "max-w-55 opacity-100" : "max-w-0 opacity-0"}`}
-          >
-            Samir Adhikari
-          </span>
-          <span className="sr-only">Samir Adhikari</span>
-        </a>
+          {/* Wordmark */}
+          <a href="#" aria-label="Samir Adhikari" className="flex items-center">
+            <Image
+              src="/favicon.ico"
+              alt=""
+              width={32}
+              height={32}
+              className="h-8 w-8"
+            />
 
-        {/* Desktop nav links */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((l) => (
-            <button
-              key={l.label}
-              type="button"
-              onClick={() => goToSection(l.href)}
-              aria-current={activeSection === l.href.replace("#", "") ? "page" : undefined}
-              className={navLinkClass(activeSection === l.href.replace("#", ""))}
+            <span
+              className={`ml-3 font-sans ${open ? "text-[11px]" : "text-[12px]"} tracking-[0.2em] uppercase text-foreground whitespace-nowrap overflow-hidden transition-all duration-200 ${
+                open || scrolled
+                  ? "max-w-[220px] opacity-100"
+                  : "max-w-[220px] opacity-0"
+              }`}
             >
-              {l.label}
-              {activeSection === l.href.replace("#", "") && (
-                <motion.span
-                  layoutId="nav-active-underline-desktop"
-                  className="absolute left-0 right-0 -bottom-2 h-px bg-foreground"
-                  transition={{ type: "spring", stiffness: 500, damping: 34 }}
-                />
-              )}
-            </button>
-          ))}
-        </nav>
+              Samir Adhikari
+            </span>
+            <span className="sr-only">Samir Adhikari</span>
+          </a>
 
-        {/* Desktop CTAs */}
-        <div className="hidden md:flex items-center gap-4">
-  
-  {/* Secondary CTA (CV) */}
-  <a
-    href="/Samir_Adhikari_CV.pdf"
-    download
-    className="rounded-full px-5 py-2
+          {/* Desktop nav links */}
+          <nav className="hidden md:flex items-center gap-8">
+            {navLinks.map((l) => (
+              <button
+                key={l.label}
+                type="button"
+                onClick={() => goToSection(l.href)}
+                aria-current={
+                  activeSection === l.href.replace("#", "") ? "page" : undefined
+                }
+                className={navLinkClass(
+                  activeSection === l.href.replace("#", ""),
+                )}
+              >
+                {l.label}
+                {activeSection === l.href.replace("#", "") && (
+                  <motion.span
+                    layoutId="nav-active-underline-desktop"
+                    className="absolute left-0 right-0 -bottom-2 h-px bg-foreground"
+                    transition={{ type: "spring", stiffness: 500, damping: 34 }}
+                  />
+                )}
+              </button>
+            ))}
+          </nav>
+
+          {/* Desktop CTAs */}
+          <div className="hidden md:flex items-center gap-4">
+            {/* Secondary CTA (CV) */}
+            <a
+              href="/Samir_Adhikari_CV.pdf"
+              download
+              className="rounded-full px-5 py-2
                font-sans text-[12px] tracking-[0.07em]
-               border border-foreground/15
-               bg-white/40 backdrop-blur-md
+               border border-glassBorder
+               bg-glass
                text-foreground
-               hover:-translate-y-0.5 hover:bg-white/60 hover:border-foreground/25
+               hover:-translate-y-0.5
                transition-all duration-200"
-  >
-    Download CV
-  </a>
+            >
+              Download CV
+            </a>
 
-  {/* Primary CTA */}
-  <a
-    href="mailto:adhikarisamir68@gmail.com"
-    className="rounded-full px-5 py-2
+            {/* Primary CTA */}
+            <a
+              href="mailto:adhikarisamir68@gmail.com"
+              className="rounded-full px-5 py-2
                font-sans text-[12px] tracking-[0.07em]
-               bg-foreground text-background
+               bg-accent
                hover:-translate-y-0.5 hover:shadow-md
                transition-all duration-200"
-  >
-    Hire me
-  </a>
+            >
+              Hire me
+            </a>
+          </div>
 
-</div>
-
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden flex flex-col justify-center gap-1.25 w-8 h-8"
-          aria-label="Toggle menu"
-        >
-          <motion.span
-            animate={open ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-            className="block h-px w-6 bg-foreground origin-center"
-          />
-          <motion.span
-            animate={open ? { opacity: 0 } : { opacity: 1 }}
-            transition={{ duration: 0.2 }}
-            className="block h-px w-6 bg-foreground"
-          />
-          <motion.span
-            animate={open ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-            className="block h-px w-6 bg-foreground origin-center"
-          />
-        </button>
-      </div>
-
-      {/* Mobile dropdown */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.25, 0, 0.2, 1] }}
-            className="md:hidden overflow-hidden bg-background border-b border-surface rounded-b-2xl shadow-[0_14px_34px_-26px_rgba(9,9,11,0.5)]"
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="md:hidden flex flex-col justify-center gap-1.25 w-8 h-8"
+            aria-label="Toggle menu"
           >
-            <div className="px-6 py-6 flex flex-col gap-5">
-              {navLinks.map((l) => (
-                <button
-                  key={l.label}
-                  type="button"
-                  onClick={() => goToSection(l.href)}
-                  aria-current={activeSection === l.href.replace("#", "") ? "page" : undefined}
-                  className={navLinkClass(activeSection === l.href.replace("#", ""), true)}
-                >
-                  {l.label}
-                  {activeSection === l.href.replace("#", "") && (
-                    <motion.span
-                      layoutId="nav-active-underline-mobile"
-                      className="absolute left-0 right-0 -bottom-2 h-px bg-foreground"
-                      transition={{ type: "spring", stiffness: 500, damping: 34 }}
-                    />
-                  )}
-                </button>
-              ))}
+            <motion.span
+              animate={open ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="block h-px w-6 bg-foreground origin-center"
+            />
+            <motion.span
+              animate={open ? { opacity: 0 } : { opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className="block h-px w-6 bg-foreground"
+            />
+            <motion.span
+              animate={open ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="block h-px w-6 bg-foreground origin-center"
+            />
+          </button>
+        </div>
 
-              <div className="flex flex-col gap-3 pt-2 border-t border-surface">
-                <a
-                  href="/Samir_Adhikari_CV.pdf"
-                  download
-                  className="fill-sides font-sans text-[12px] tracking-[0.06em] px-5 py-2.5 rounded-full border border-foreground/25 text-foreground text-center transition-colors duration-200"
-                  style={{
-                    "--fill": "var(--foreground)",
-                    "--fill-text": "var(--background)",
-                  } as CSSProperties}
-                >
-                  <span>Download Resume ↓</span>
-                </a>
-                <a
-                  href="mailto:adhikarisamir68@gmail.com"
-                  onClick={() => setOpen(false)}
-                  className="font-sans text-[12px] tracking-[0.06em] px-5 py-2.5 rounded-full bg-foreground text-background text-center hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  Hire me
-                </a>
+        {/* Mobile dropdown */}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden overflow-hidden bg-background border-b border-glassBorder rounded-b-2xl shadow-[0_14px_34px_-26px_rgba(9,9,11,0.5)]"
+            >
+              <div className="px-6 py-6 flex flex-col gap-5">
+                {navLinks.map((l) => (
+                  <button
+                    key={l.label}
+                    type="button"
+                    onClick={() => goToSection(l.href)}
+                    aria-current={
+                      activeSection === l.href.replace("#", "")
+                        ? "page"
+                        : undefined
+                    }
+                    className={navLinkClass(
+                      activeSection === l.href.replace("#", ""),
+                      true,
+                    )}
+                  >
+                    {l.label}
+                    {activeSection === l.href.replace("#", "") && (
+                      <motion.span
+                        layoutId="nav-active-underline-mobile"
+                        className="absolute left-0 right-0 -bottom-2 h-px bg-foreground"
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 34,
+                        }}
+                      />
+                    )}
+                  </button>
+                ))}
+
+                <div className="flex flex-col gap-3 pt-2">
+                  <a
+                    href="/Samir_Adhikari_CV.pdf"
+                    download
+                    className="fill-sides font-sans text-[12px] tracking-[0.06em] px-5 py-2.5 rounded-full border border-foreground/25 text-foreground text-center transition-colors duration-200"
+                    style={
+                      {
+                        "--fill": "var(--foreground)",
+                        "--fill-text": "var(--background)",
+                      } as CSSProperties
+                    }
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      Download CV <Icon icon="mdi:download" />
+                    </span>
+                  </a>
+                  <a
+                    href="mailto:adhikarisamir68@gmail.com"
+                    onClick={() => setOpen(false)}
+                    className="font-sans text-[12px] tracking-[0.06em] px-5 py-2.5 rounded-full bg-accent text-center hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    Hire me
+                  </a>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.header>
     </>
   );

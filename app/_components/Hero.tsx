@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { motion } from "framer-motion";
 import { stats } from "../_const/data";
@@ -26,13 +27,59 @@ const stagger = {
   },
 };
 
-export default function Hero() {
-  return (
-<section className="relative overflow-hidden bg-white min-h-[92vh] flex flex-col">
-      {/* glow */}
-      <div className="absolute left-[60%] top-0 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[140px] pointer-events-none" />
+const PHRASES = [
+  "Full-Stack Developer based in Pokhara, Nepal",
+  "React, Next.js, FastAPI, Node.js, NestJs, PostgreSQL",
+  "AI & LLM Enthusiast",
+];
 
-<div className="relative max-w-7xl mx-auto px-6 sm:px-10 pt-24 sm:pt-32 pb-20 flex-1 flex flex-col justify-center w-full">
+const TYPE_SPEED = 45; // ms per character
+const DELETE_SPEED = 22; // ms per character
+const HOLD_MS = 1800; // pause after fully typed
+const PAUSE_MS = 400; // pause before typing next
+
+function useTypewriter(phrases: string[]) {
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = phrases[phraseIndex];
+
+    if (!deleting && charIndex < current.length) {
+      const t = setTimeout(() => setCharIndex((c) => c + 1), TYPE_SPEED);
+      return () => clearTimeout(t);
+    }
+
+    if (!deleting && charIndex === current.length) {
+      const t = setTimeout(() => setDeleting(true), HOLD_MS);
+      return () => clearTimeout(t);
+    }
+
+    if (deleting && charIndex > 0) {
+      const t = setTimeout(() => setCharIndex((c) => c - 1), DELETE_SPEED);
+      return () => clearTimeout(t);
+    }
+
+    if (deleting && charIndex === 0) {
+      const t = setTimeout(() => {
+        setDeleting(false);
+        setPhraseIndex((i) => (i + 1) % phrases.length);
+      }, PAUSE_MS);
+      return () => clearTimeout(t);
+    }
+  }, [charIndex, deleting, phraseIndex, phrases]);
+
+  // Derive directly — no second effect needed
+  return phrases[phraseIndex].slice(0, charIndex);
+}
+
+export default function Hero() {
+  const typed = useTypewriter(PHRASES);
+
+  return (
+    <section className="relative overflow-hidden bg-background min-h-[94vh] flex flex-col">
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-10 pt-24 sm:pt-32 pb-20 flex-1 flex flex-col justify-center w-full">
         <motion.div
           initial="hidden"
           animate="show"
@@ -44,12 +91,16 @@ export default function Hero() {
             {/* pill */}
             <motion.div
               variants={fade}
-              className="inline-flex items-center gap-2 mb-8 px-5 py-2 rounded-full
-                         bg-white/60 backdrop-blur-xl border border-black/10 shadow-sm"
+              className="inline-flex items-center gap-2 mb-8"
             >
-              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-[11px] uppercase tracking-[0.15em] text-black/70">
-                Open to collaborations
+              <span className="font-mono text-[11px] text-foreground/30">
+                [
+              </span>
+              <span className="font-mono text-[11px] text-foreground/50 uppercase tracking-[0.15em]">
+                available for work
+              </span>
+              <span className="font-mono text-[11px] text-foreground/30">
+                ]
               </span>
             </motion.div>
 
@@ -59,14 +110,16 @@ export default function Hero() {
                 Samir Adhikari
               </h1>
 
-              <p className="mt-5 text-[18px] sm:text-[20px] text-black/70 leading-[1.6]">
-                Full-Stack Developer based in Pokhara, Nepal
+              {/* Typewriter line */}
+              <p className="mt-5 text-[18px] sm:text-[20px] leading-[1.6] font-mono min-h-[1.6em] text-green-300">
+                {typed}
+                <span className="inline-block w-[2px] h-[1.1em] bg-accent align-middle ml-[2px] animate-pulse" />
               </p>
 
-              <p className="mt-6 max-w-[600px] text-[15px] leading-[1.9] text-black/60">
+              <p className="mt-6 max-w-[600px] text-[15px] leading-[1.9] text-foreground/60">
                 I build scalable web systems with modern frontend and backend
-                technologies, focusing on performance, clean architecture,
-                and practical AI-driven solutions.
+                technologies, focusing on performance, clean architecture, and
+                practical AI-driven solutions.
               </p>
             </motion.div>
 
@@ -74,21 +127,19 @@ export default function Hero() {
             <motion.div variants={fade} className="flex flex-wrap gap-4 mt-10">
               <a
                 href="#work"
-                className="rounded-full bg-foreground text-background px-7 py-[14px]
+                className="rounded-full bg-glass border border-glassBorder px-7 py-[14px]
                            text-sm tracking-[0.06em]
                            hover:-translate-y-1 hover:shadow-md transition-all"
               >
                 View Work
               </a>
-
               <a
                 href="#contact"
                 className="rounded-full px-7 py-[14px]
                            text-sm tracking-[0.06em]
-                           border border-foreground/15
-                           bg-white/40 backdrop-blur-md
+                           bg-accent backdrop-blur-md
                            text-foreground
-                           hover:-translate-y-1 hover:border-foreground/30 hover:bg-white/60
+                           hover:-translate-y-1 hover:border-foreground/30
                            transition-all"
               >
                 Let&apos;s Talk
@@ -101,24 +152,17 @@ export default function Hero() {
             variants={fade}
             className="lg:justify-self-end w-full max-w-[420px] flex flex-col gap-3"
           >
-            <p className="text-[11px] uppercase tracking-[0.14em] text-black/50 mb-2">
-              Developer Stats
-            </p>
-
             {stats.map((s) => (
               <div
                 key={s.v}
                 className="group px-5 py-4 rounded-2xl
-                           bg-white/60 backdrop-blur-xl
-                           border border-black/10
+                           bg-glass backdrop-blur-xl
+                           border border-glassBorder
                            shadow-sm hover:shadow-md
                            hover:-translate-y-1 transition"
               >
-                <h4 className="font-serif text-[2rem] leading-none text-black">
-                  {s.v}
-                </h4>
-
-                <p className="mt-2 text-[10px] uppercase tracking-[0.12em] text-black/50">
+                <h4 className="font-serif text-[2rem] leading-none">{s.v}</h4>
+                <p className="mt-2 text-[10px] uppercase tracking-[0.12em]">
                   {s.l}
                 </p>
               </div>

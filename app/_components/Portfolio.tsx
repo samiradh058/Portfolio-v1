@@ -7,6 +7,7 @@ import About from "./About";
 import Work from "./Work";
 import Skills from "./Skills";
 import Contact from "./Contact";
+import Experience from "./Experience";
 
 export default function Portfolio() {
   return (
@@ -15,8 +16,9 @@ export default function Portfolio() {
       <Hero />
       <Marquee />
       <About />
-      <Work />
       <Skills />
+      <Work />
+      <Experience />
       <Contact />
     </div>
   );

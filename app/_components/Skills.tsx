@@ -10,7 +10,7 @@ const fade = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0, 0.2, 1] as const },
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
@@ -39,7 +39,7 @@ function SkillRow({
 
   return (
     <div
-      className="border-t border-border"
+      className="border-t border-b border-glassBorderLight cursor-pointer"
       onMouseEnter={() => setOpen(cat)}
       onMouseLeave={() => setOpen(null)}
     >
@@ -65,7 +65,7 @@ function SkillRow({
             className={`w-6 h-6 flex items-center justify-center rounded-full border text-sm font-light leading-none transition-all duration-300 ${
               isOpen
                 ? "border-accent text-accent rotate-45"
-                : "border-border text-dim"
+                : "border-glassBorderLight text-foreground/50"
             }`}
           >
             +
@@ -80,7 +80,7 @@ function SkillRow({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.25, 0, 0.2, 1] }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
             <div className="pb-7 pl-12 flex flex-wrap gap-2">
@@ -89,8 +89,12 @@ function SkillRow({
                   key={item}
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.22, delay: i * 0.04, ease: "easeOut" }}
-                  className="font-sans text-[13px] px-4 py-2 rounded-full bg-surface border border-border text-dim hover:border-accent/20 hover:text-accent transition-colors duration-200 cursor-default"
+                  transition={{
+                    duration: 0.22,
+                    delay: i * 0.04,
+                    ease: "easeOut",
+                  }}
+                  className="font-sans text-[13px] px-4 py-2 rounded-full bg-background border border-glassBorderLight text-foreground/60 hover:border-accent/20 hover:text-accent transition-colors duration-200 cursor-default"
                 >
                   {item}
                 </motion.span>
@@ -127,7 +131,13 @@ function AnimatedSkillRow({
       animate={inView ? "show" : "hidden"}
       variants={fade}
     >
-      <SkillRow cat={cat} items={items} idx={idx} open={open} setOpen={setOpen} />
+      <SkillRow
+        cat={cat}
+        items={items}
+        idx={idx}
+        open={open}
+        setOpen={setOpen}
+      />
     </motion.div>
   );
 }
@@ -139,9 +149,8 @@ export default function Skills() {
   const headingInView = useInView(headingRef, { once: true, amount: 0.3 });
 
   return (
-    <section id="skills" className="bg-white">
+    <section id="skills" className="bg-glass">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
-
         {/* Heading */}
         <motion.div
           ref={headingRef}
@@ -150,14 +159,14 @@ export default function Skills() {
           variants={stag}
         >
           <motion.div variants={fade}>
-            <Label num="03" text="Skills & Stack" />
+            <Label num="02" text="Skills & Stack" />
           </motion.div>
 
           <motion.div
             variants={fade}
             className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-12"
           >
-            <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] tracking-[-0.025em] text-foreground">
+            <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] tracking-[-0.025em]">
               Core stack and <em className="italic">learning focus.</em>
             </h2>
             <p className="font-mono text-[10px] tracking-[0.16em] text-foreground/50 uppercase">
@@ -180,7 +189,6 @@ export default function Skills() {
                 setOpen={setOpen}
               />
             ))}
-            <div className="border-t border-foreground/14" />
           </div>
 
           {/* Right column */}
@@ -195,10 +203,8 @@ export default function Skills() {
                 setOpen={setOpen}
               />
             ))}
-            <div className="border-t border-foreground/14" />
           </div>
         </div>
-
       </div>
     </section>
   );

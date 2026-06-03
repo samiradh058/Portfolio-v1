@@ -49,9 +49,8 @@ export default function About() {
   const tagsInView = useInView(tagsRef, { once: true, amount: 0.5 });
 
   return (
-    <section id="about" className="bg-white">
+    <section id="about" className="">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
-
         {/* Label */}
         <motion.div
           ref={headingRef}
@@ -77,7 +76,7 @@ export default function About() {
               full-stack systems.
             </h2>
 
-            <p className="text-dim leading-7 max-w-md">
+            <p className="text-foreground/60 leading-7 max-w-md">
               Building thoughtful interfaces while gradually moving deeper into
               backend architecture, AI, and intelligent systems.
             </p>
@@ -86,7 +85,6 @@ export default function About() {
 
         {/* Main layout */}
         <div className="grid lg:grid-cols-[420px_1fr] gap-10 items-start">
-
           {/* LEFT CARD */}
           <motion.div
             ref={leftRef}
@@ -95,13 +93,11 @@ export default function About() {
             variants={fade}
             className="lg:sticky lg:top-28"
           >
-            <div className="rounded-[32px] border border-border bg-surface/50 backdrop-blur-xl p-7 overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent" />
-
+            <div className="rounded-[32px] border border-glassBorder bg-glassBorder backdrop-blur-xl p-7 overflow-hidden relative">
               <div className="relative z-10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-xs tracking-[0.16em] uppercase text-dim">
+                    <p className="text-xs tracking-[0.16em] uppercase text-foreground/60">
                       Based in Nepal 🇳🇵
                     </p>
                     <h3 className="mt-3 text-3xl font-serif text-foreground">
@@ -110,7 +106,7 @@ export default function About() {
                   </div>
                 </div>
 
-                <p className="mt-6 text-dim leading-7">
+                <p className="mt-6 text-foreground/60 leading-7">
                   3+ years focused on frontend development using React and
                   Next.js, with growing expertise in backend engineering,
                   FastAPI, PostgreSQL, and modern system design.
@@ -120,9 +116,9 @@ export default function About() {
                   {aboutCards.map((card) => (
                     <div
                       key={card.label}
-                      className="rounded-2xl border border-border bg-background/40 p-4"
+                      className="rounded-2xl border border-glassBorder bg-background p-4"
                     >
-                      <p className="text-[10px] uppercase tracking-[0.15em] text-dim">
+                      <p className="text-[10px] uppercase tracking-[0.15em] text-foreground/60">
                         {card.label}
                       </p>
                       <p className="mt-2 text-sm text-foreground leading-6">
@@ -160,13 +156,13 @@ export default function About() {
               <motion.div
                 key={index}
                 variants={fade}
-                className="relative border-l border-border pl-8"
+                className="relative border-l border-glassBorderLight pl-8"
               >
                 <span className="absolute left-[-6px] top-2 h-3 w-3 rounded-full bg-accent" />
                 <h4 className="text-xl font-medium text-foreground mb-3">
                   {item.title}
                 </h4>
-                <p className="text-dim leading-8">{item.text}</p>
+                <p className="text-foreground/60 leading-8">{item.text}</p>
               </motion.div>
             ))}
 
@@ -180,7 +176,7 @@ export default function About() {
             >
               <motion.p
                 variants={fade}
-                className="text-xs uppercase tracking-[0.18em] text-dim mb-4"
+                className="text-xs uppercase tracking-[0.18em] text-foreground/60 mb-4"
               >
                 Currently Exploring
               </motion.p>
@@ -201,7 +197,7 @@ export default function About() {
                         },
                       },
                     }}
-                    className="px-4 py-2 rounded-full border border-border hover:border-accent/20 hover:text-accent bg-surface/50 text-sm text-dim transition-all duration-300"
+                    className="px-4 py-2 rounded-full border border-glassBorderLight bg-glass text-sm text-foreground/60 transition-all duration-300"
                   >
                     {tag}
                   </motion.span>

@@ -12,14 +12,14 @@ export const stats = [
 ];
 
 export const marqueeItems = [
-  "Full-Stack Development",
-  "React.js",
-  "Next.js",
-  "Node.js",
-  "NestJS",
-  "FastAPI",
-  "PostgreSQL",
-  "LLMs",
+  { label: "Full-Stack Development", icon: "/icons/fullstack.svg" },
+  { label: "React.js", icon: "/icons/react.svg" },
+  { label: "Next.js", icon: "/icons/next.svg" },
+  { label: "Node.js", icon: "/icons/node.svg" },
+  { label: "NestJS", icon: "/icons/nestjs.svg" },
+  { label: "FastAPI", icon: "/icons/fastapi.svg" },
+  { label: "PostgreSQL", icon: "/icons/postgres.svg" },
+  { label: "LLMs", icon: "/icons/llm.svg" },
 ];
 
 export const skills = [
@@ -87,24 +87,34 @@ export const professionalProjects = [
   {
     id: "w1",
     name: "Internet Banking",
+    icon: "mdi:bank-transfer",
     desc: "End-to-end delivery of a secure online banking platform with money transfers, remittance, top-ups, Rav-kav, and other core features, backed by robust security controls.",
-    tags: ["React", "HMAC verification", "JWT auth"],
+    tags: ["HMAC verification", "JWT auth"],
     image: "/ibank.png",
   },
   {
     id: "w2",
     name: "Card Mgnt. System",
+    icon: "mdi:credit-card",
     desc: "Comprehensive card management system for all card-related activities including assigning cards, changing status, setting fees, setting limits, and more.",
-    tags: ["Next.js", "Typescript", "Tailwind"],
+    tags: ["Typescript", "Tailwind"],
     image: "/cms.png",
   },
   {
     id: "w3",
     name: "Core Banking System",
+    icon: "mdi:bank",
     desc: "A robust core banking system handling account management, transaction processing, and customer data management with high reliability and security.",
     tags: ["Angular.js"],
     image: "/cbs.png",
   },
+  {
+    id: "w4",
+    name:"Saloon Management System",
+    icon: "mdi:scissors-cutting",
+    desc: "Salon Management System is a comprehensive solution that integrates billing, appointment scheduling,inventory, service, and staff management and transaction tracking. The system is currently in the deployment and client onboarding phase for use in a real business environment.",
+    tags: ["React.js", "FastAPI"],
+  }
 ];
 
 export const workExperience = [

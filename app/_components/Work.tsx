@@ -6,11 +6,7 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 
 import Label from "./Label";
-import {
-  personalProjects,
-  professionalProjects,
-  workExperience,
-} from "../_const/data";
+import { personalProjects, professionalProjects } from "../_const/data";
 
 const fade = {
   hidden: { opacity: 0, y: 18 },
@@ -31,19 +27,11 @@ type Project = {
   id: string;
   name: string;
   desc: string;
-  image: string;
+  image?: string;
   tags: string[];
+  icon?: string;
   url?: string;
   year?: string;
-};
-
-type Experience = {
-  company: string;
-  website?: string;
-  location: string;
-  from: string;
-  to: string;
-  summary: string;
 };
 
 // ───────────────────────── Tags ─────────────────────────
@@ -53,7 +41,7 @@ function Tags({ tags }: { tags: string[] }) {
       {tags.map((tag) => (
         <span
           key={tag}
-          className="text-[11px] px-3 py-1 rounded-full border border-foreground/10 bg-white/40 backdrop-blur-md text-foreground/60"
+          className="text-[11px] px-3 py-1 rounded-full border border-glassBorderLight bg-background backdrop-blur-md text-foreground/60"
         >
           {tag}
         </span>
@@ -70,18 +58,20 @@ function FeaturedProject({ project }: { project: Project }) {
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative grid lg:grid-cols-2 rounded-[28px] overflow-hidden border border-foreground/10 bg-white/50 backdrop-blur-xl hover:-translate-y-1 hover:shadow-sm hover:border-accent/20 transition duration-300"
+      className="group relative grid lg:grid-cols-2 rounded-[28px] overflow-hidden border border-foreground/10 bg-glass backdrop-blur-xl hover:-translate-y-1 hover:shadow-sm hover:border-accent/20 transition duration-300"
     >
       <div className="relative aspect-[16/11] overflow-hidden">
-        <Image
-          src={project.image}
-          alt={project.name}
-          fill
-          className="object-cover group-hover:scale-[1.04] transition duration-700"
-        />
+        {project.image && (
+          <Image
+            src={project.image}
+            alt={project.name}
+            fill
+            className="object-cover group-hover:scale-[1.04] transition duration-700 group-hover:blur-[0.8px]"
+          />
+        )}
         {project.url && (
           <div className="absolute inset-0 flex items-end justify-end p-4 opacity-0 group-hover:opacity-100 transition duration-300">
-            <span className="flex items-center gap-2 text-[11px] tracking-[0.12em] uppercase px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-black/10 text-black shadow-sm">
+            <span className="bg-background flex items-center gap-2 text-[11px] tracking-[0.12em] uppercase px-4 py-2 rounded-full backdrop-blur-md text-white shadow-sm">
               View Project
               <Icon icon="mdi:arrow-top-right" className="text-[14px]" />
             </span>
@@ -122,18 +112,20 @@ function ProjectCard({ project }: { project: Project }) {
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex flex-col rounded-[22px] overflow-hidden border border-foreground/10 bg-white/40 backdrop-blur-xl hover:-translate-y-1 transition duration-300 hover:border-accent/20 hover:shadow-sm"
+      className="group relative flex flex-col rounded-[22px] overflow-hidden border border-glassBorder bg-glass backdrop-blur-xl hover:-translate-y-1 transition duration-300 hover:border-accent/20 hover:shadow-sm"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
-        <Image
-          src={project.image}
-          alt={project.name}
-          fill
-          className="object-cover group-hover:scale-105 transition duration-500"
-        />
+        {project.image && (
+          <Image
+            src={project.image}
+            alt={project.name}
+            fill
+            className="object-cover transition duration-500 group-hover:scale-105 group-hover:blur-[0.8px]"
+          />
+        )}
         {project.url && (
           <div className="absolute inset-0 flex items-end justify-end p-4 opacity-0 group-hover:opacity-100 transition duration-300">
-            <span className="flex items-center gap-2 text-[11px] tracking-[0.12em] uppercase px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-black/10 text-black shadow-sm">
+            <span className="flex items-center gap-2 text-[11px] tracking-[0.12em] uppercase px-4 py-2 rounded-full bg-background border border-black/10 text-white shadow-sm">
               View Project
               <Icon icon="mdi:arrow-top-right" className="text-[14px]" />
             </span>
@@ -142,13 +134,15 @@ function ProjectCard({ project }: { project: Project }) {
       </div>
 
       <div className="p-5 flex flex-col flex-1">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center justify-between gap-3">
           <h4 className="font-serif text-[1.2rem] text-foreground leading-snug">
             {project.name}
           </h4>
           <span className="text-[11px] tracking-[0.12em] text-foreground/40 whitespace-nowrap">
-            {project.year ? project.year : (
-              <span className="border border-dashed border-accent/20 bg-accent/5 px-2 rounded-full">
+            {project.year ? (
+              project.year
+            ) : (
+              <span className="border border-dashed border-accent bg-accent/5 px-2 rounded-full">
                 NDA Restricted
               </span>
             )}
@@ -166,28 +160,43 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-// ───────────────────────── Experience ─────────────────────────
-function ExperienceItem({ item }: { item: Experience }) {
+function ExperienceCard({ project }: { project: Project }) {
   return (
-    <motion.div
+    <motion.a
       variants={fade}
-      className="relative pl-6 border-l border-foreground/10"
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-center gap-5 px-5 py-4 rounded-xl border border-glassBorder bg-glass backdrop-blur-xl hover:border-accent/20 hover:bg-glass/80 transition duration-300"
     >
-      <span className="absolute left-[-5px] top-2 h-2.5 w-2.5 rounded-full bg-accent" />
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-        <div
-          onClick={() => item.website && window.open(item.website, "_blank")}
-          className={`cursor-pointer ${item.website ? "hover:text-accent transition-colors duration-200" : ""}`}
-        >
-          <h4 className="font-serif text-[1.3rem] text-foreground">{item.company}</h4>
-          <p className="text-[13px] text-foreground/60">{item.location}</p>
-        </div>
-        <span className="text-[11px] tracking-[0.12em] text-foreground/40">
-          {item.from} — {item.to}
-        </span>
+      {/* Icon box */}
+      <div className="shrink-0 flex items-center justify-center w-11 h-11 rounded-lg bg-foreground/5 border border-glassBorder text-foreground/60 group-hover:text-accent transition duration-300">
+        <Icon
+          icon={project.icon ?? "mdi:code-braces"}
+          className="text-[20px]"
+        />
       </div>
-      <p className="mt-3 text-[14px] leading-[1.7] text-foreground/60">{item.summary}</p>
-    </motion.div>
+
+      {/* Title + description */}
+      <div className="flex-1 min-w-0">
+        <h4 className="font-semibold text-foreground text-[0.95rem] leading-snug">
+          {project.name}
+        </h4>
+        <p className="mt-0.5 text-[13px] text-foreground/50">{project.desc}</p>
+      </div>
+
+      {/* Tags */}
+      <div className="shrink-0 flex items-center gap-2">
+        {project.tags?.map((tag) => (
+          <span
+            key={tag}
+            className="text-[11px] font-mono px-2.5 py-1 rounded-md border border-glassBorder bg-background text-foreground/60"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </motion.a>
   );
 }
 
@@ -230,7 +239,6 @@ export default function Work() {
   return (
     <section id="work" className="">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 py-24 sm:py-32 space-y-10">
-
         {/* Heading */}
         <motion.div
           ref={headingRef}
@@ -239,16 +247,15 @@ export default function Work() {
           variants={stag}
         >
           <motion.div variants={fade}>
-            <Label num="02" text="Work" />
+            <Label num="03" text="Work" />
           </motion.div>
-          <motion.div variants={fade} className="mb-14">
-            <h2 className="font-serif font-light text-[clamp(2.2rem,4vw,3.6rem)] leading-[1.1] text-foreground">
-              Selected work
+          <motion.div
+            variants={fade}
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-12"
+          >
+            <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] tracking-[-0.025em]">
+              Personal Projects
             </h2>
-            <p className="mt-4 text-foreground/60 max-w-xl">
-              A collection of projects focused on performance, scalability,
-              and clean user experience.
-            </p>
           </motion.div>
         </motion.div>
 
@@ -258,39 +265,34 @@ export default function Work() {
         </AnimatedSection>
 
         {/* Personal projects grid — staggered cards */}
-        <AnimatedSection variants={stag} amount={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <AnimatedSection
+          variants={stag}
+          amount={0.1}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {restPersonal.map((p) => (
             <ProjectCard key={p.id} project={p} />
           ))}
         </AnimatedSection>
 
-        {/* Experience */}
-        <AnimatedSection variants={stag} amount={0.15} className="mt-24">
-          <motion.h3 variants={fade} className="font-serif text-[2rem] text-foreground mb-10">
-            Experience
-          </motion.h3>
-          <div className="space-y-10">
-            {workExperience.map((item) => (
-              <ExperienceItem key={`${item.company}-${item.from}`} item={item} />
-            ))}
-          </div>
-        </AnimatedSection>
-
         {/* Professional projects */}
         <AnimatedSection variants={stag} amount={0.1} className="mt-24">
-          <motion.h3 variants={fade} className="font-serif text-[2rem] text-foreground mb-10">
-            Professional Work
-          </motion.h3>
           <motion.div
-            variants={stag}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={fade}
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-12"
           >
+            <h2 className="font-serif font-light text-[clamp(1.9rem,3.5vw,2.8rem)] tracking-[-0.025em]">
+              Commercial Experience
+            </h2>
+          </motion.div>
+          <motion.div variants={stag} className="space-y-4">
             {professionalProjects.map((p) => (
-              <ProjectCard key={p.id} project={p} />
+              <div className="" key={p.id}>
+                <ExperienceCard key={p.id} project={p} />
+              </div>
             ))}
           </motion.div>
         </AnimatedSection>
-
       </div>
     </section>
   );
